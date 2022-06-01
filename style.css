@@ -1,0 +1,23 @@
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.navBar {
+    display: flex;
+    background-color: cornflowerblue;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    height:100%;
+}
+
+footer {
+    background-color: cornflowerblue;
+    
+}
+
