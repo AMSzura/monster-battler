@@ -1,3 +1,21 @@
+class playerObject {
+    constructor(name, lineUp) {
+        this.name = name;
+        this.lineUp = lineUp;
+    }
+}
+
+class cpuObject {
+    constructor(name, lineUp) {
+        this.name = name;
+        this.lineUp = lineUp;
+    }
+}
+
+
+
+
+
 
 
 const monster = {
@@ -11,22 +29,3 @@ const monster = {
         console.log(this.name + " attacked " + target.name + " for " + damageValue + " damage!");
     }
 }
-
-
-const player = Object.create(monster);
-player.name = "squirtle";
-
-const enemy = Object.create(monster);
-enemy.name = "charmander";
-
-
-player.attack(enemy);
-
-console.log(enemy);
-
-player.attack(enemy);
-
-console.log(enemy);
-
-enemy.attack(player);
-console.log(player);
