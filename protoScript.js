@@ -1,31 +1,36 @@
-class playerObject {
+// class for constructing the player object
+class Player {
     constructor(name, lineUp) {
         this.name = name;
         this.lineUp = lineUp;
     }
 }
 
-class cpuObject {
+// class for constructing the computer opponent object
+class Cpu {
     constructor(name, lineUp) {
         this.name = name;
         this.lineUp = lineUp;
     }
 }
 
-
-
-
-
-
-
-const monster = {
-    totalHealth: 100,
-    currentHealth: 100,
-    attackValue: 20,
-    defenseValue: 8,
-    attack(target) { //basic attack function
-        damageValue = (this.attackValue/2);
-        target.currentHealth = target.currentHealth - damageValue;
-        console.log(this.name + " attacked " + target.name + " for " + damageValue + " damage!");
+// class for constructing individual monster objects
+class Monster {
+    constructor(name, totalHealth, element, attackVal, defenseVal) {
+        this.name = name;
+        this.totalHealth = totalHealth;
+        this.element = element;
+        this.attackVal = attackVal;
+        this.defenseVal = defenseVal;
     }
 }
+
+
+
+
+
+    // attack(target) { //basic attack function
+        // damageValue = (this.attackValue/2);
+        // target.currentHealth = target.currentHealth - damageValue;
+        // console.log(this.name + " attacked " + target.name + " for " + damageValue + " damage!");
+
