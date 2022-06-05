@@ -25,7 +25,12 @@ class Monster {
     }
 }
 
+const squirtle = ["Squirtle", 100, "water", 14, 20];
 
+
+let Squirtle = new Monster (...squirtle);
+
+console.log(Squirtle);
 
 
 
