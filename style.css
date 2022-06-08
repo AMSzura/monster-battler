@@ -53,6 +53,7 @@ body {
     width: 50%;
     height: 100%;
     font-size: 52px;
+    /* border: 3px double black; */
 }
 
 .column {
@@ -65,6 +66,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 .action-menu div {
@@ -78,5 +80,6 @@ footer {
 
 .display div {
     border: 1px solid black;
+    border-radius: 10px;
 }
 

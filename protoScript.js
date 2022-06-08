@@ -19,9 +19,12 @@ class Monster {
     constructor(name, totalHealth, element, attackVal, defenseVal, moves) {
         this.name = name;
         this.totalHealth = totalHealth;
+        this.currentHealth = totalHealth;
         this.element = element;
         this.attackVal = attackVal;
+        this.currentAttackVal = attackVal;
         this.defenseVal = defenseVal;
+        this.currentDefenseVal = defenseVal;
         this.moves = moves;
     }
 }
@@ -40,7 +43,6 @@ function determineTarget() {
         attacker = cpu.lineUp[0];
         target = player.lineUp[0];
     }
-    console.log("attacker is " + attacker + ". target is " + target);
 }
 
 //determines the lineUp source for a swap function
@@ -58,7 +60,7 @@ function determineTargetSwap() {
 //to be called after each turn ending event
 function endTurn() {
     (playerTurn) ? playerTurn = false : playerTurn = true;
-
+    (playerTurn) ? console.log("its your turn!") : (console.log("its the enemy's turn"))
 
 }
 
@@ -69,6 +71,15 @@ Array.prototype.swap = function (x, y) {
     this[y] = b;
     return this;
 }
+
+//function to calculate percentage
+
+function calcPerc(percentage, num) {
+    result = num * (percentage / 100);
+    return parseFloat(result.toFixed(2));
+}
+
+
 
 //to swap active monster for another in lineUp
 function swap(chosen) {
@@ -82,17 +93,42 @@ function swap(chosen) {
 
     console.log(attacker.lineUp[0]);
     console.log(attacker.lineUp);
-    endTurn();
+    if (playerTurn == true) {
+        endTurn();
+    }
 }
 
 //decides the cpu's action
 function cpuTurn() {
     determineTarget();
-    if (attacker.currentHealth > 20 && attacker.lineUp.some(element => element.health > 0)) {
+    if (attacker.currentHealth > 20 && attacker.lineUp.some(element => element.currentHealth > 0)) {
         cpuSwap();
     } else {
         cpuMove();
     }
+}
+
+// cpu monster swapping mechanic. swaps to another monster that is not dead and is not the current monster.
+function cpuSwap() {
+    determineTargetSwap();
+    console.log(attacker.lineUp[0]);
+    console.log(attacker.lineUp[0].currentHealth);
+    found = attacker.lineUp.find(element => element.currentHealth > 0 && attacker.lineUp.indexOf(element) != 0);
+    console.log(found);
+    targetIndex = attacker.lineUp.indexOf(found);
+    console.log(targetIndex)
+    attacker.lineUp.swap(0, targetIndex);
+    console.log(attacker.lineUp[0]);
+    if (playerTurn != true) {
+        endTurn();
+    }
+}
+
+// picks a random move for the cpu to use
+function cpuMove() {
+    determineTarget();
+    random = Math.floor(Math.random() * attacker.moves.length);
+    attacker.moves[random]();
 }
 
 
@@ -101,23 +137,44 @@ function cpuTurn() {
 
 function scratch() {
     determineTarget();
-    damage = attacker.attackVal / 2;
-    defense = target.defenseVal / 2;
-    target.currentHealth = - damage;
-
-    if (target.currentHealth < 0) {
-        target.currentHealth = 0;
-    }
+    console.log(attacker.name + " used scratch");
+    damage = attacker.currentAttackVal;
+    console.log(attacker.name + "'s attack value is " + attacker.currentAttackVal);
+    console.log("initial damage is " + damage);
+    defense = target.currentDefenseVal / 8;
+    damage = damage - defense;
+    console.log("damage after reduction is " + damage);
+    damage = Math.round(damage);
+    target.currentHealth = target.currentHealth - damage;
 
     console.log(attacker.name + " hit " + target.name + " for " + damage + " damage!");
+    console.log(target.name + "'s health is now " + target.currentHealth);
     endTurn();
+}
+
+function growl() {
+    determineTarget();
+    console.log(attacker.name + " used growl!");
+    damage = attacker.currentAttackVal / 8;
+    damage = Math.round(damage);
+    y = target.attackVal;
+    if (target.currentAttackVal <= calcPerc(50, y)) {
+        console.log("the growl had no effect");
+    } else {
+        target.currentAttackVal = target.currentAttackVal - damage;
+        console.log(target.name + "'s attack was reduced by " + damage);
+        console.log(target.name + "'s attack is now " + target.currentAttackVal);
+    }
+
+    endTurn();
+
 }
 
 
 //declarations for testing
 
-const squirtleData = ["Squirtle", 100, "water", 14, 20, [scratch]];
-const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch]];
+const squirtleData = ["Squirtle", 100, "water", 14, 18, [scratch, growl]];
+const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch, growl]];
 
 
 let squirtle = new Monster(...squirtleData);
@@ -125,4 +182,6 @@ let rockler = new Monster(...rocklerData);
 let rocklerCPU = new Monster(...rocklerData);
 
 const player = new Player("aaron", [squirtle, rockler]);
-const cpu = new Cpu("bob", [rockler]);
+const cpu = new Cpu("bob", [rockler, squirtle]);
+
+playerTurn = true;
