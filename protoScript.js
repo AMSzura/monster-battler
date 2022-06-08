@@ -26,10 +26,12 @@ class Monster {
     }
 }
 
+//initial declarations/initialisations
 let target;
 let attacker;
 let playerTurn = true;
 
+//determines the target and source for an attack
 function determineTarget() {
     if (playerTurn) {
         attacker = player.lineUp[0];
@@ -41,6 +43,7 @@ function determineTarget() {
     console.log("attacker is " + attacker + ". target is " + target);
 }
 
+//determines the lineUp source for a swap function
 function determineTargetSwap() {
     if (playerTurn) {
         attacker = player;
@@ -52,10 +55,12 @@ function determineTargetSwap() {
 }
 }
 
+//to be called after each turn ending event
 function endTurn() {
     (playerTurn) ? playerTurn = false : playerTurn = true;
 }
 
+//method to ease monster swap functionality
 Array.prototype.swap = function (x,y) {
     var b = this[x];
     this[x] = this[y];
@@ -63,6 +68,7 @@ Array.prototype.swap = function (x,y) {
     return this;
   }
 
+  //to swap active monster for another in lineUp
 function swap(chosen) {
     determineTargetSwap();
     found = attacker.lineUp.find(element => element.name == chosen);
@@ -78,6 +84,7 @@ function swap(chosen) {
     }
 
 
+// below are functions for each move type in the game
 
 function scratch() {
     determineTarget();
@@ -89,6 +96,8 @@ function scratch() {
     }
 
 
+    //declarations for testing
+
 const squirtleData = ["Squirtle", 100, "water", 14, 20, [scratch]];
 const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch]];
 
@@ -99,14 +108,3 @@ let rocklerCPU = new Monster (...rocklerData);
 
 const player = new Player ("aaron", [squirtle, rockler]);
 const cpu = new Cpu ("bob", [rockler]);
-
-
-swap('Rockler')
-
-
-
-    // attack(target) { //basic attack function
-        // damageValue = (this.attackValue/2);
-        // target.currentHealth = target.currentHealth - damageValue;
-        // console.log(this.name + " attacked " + target.name + " for " + damageValue + " damage!");
-
