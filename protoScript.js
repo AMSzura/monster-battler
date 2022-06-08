@@ -45,7 +45,7 @@ function determineTarget() {
     }
 }
 
-//determines the lineUp source for a swap function
+//determines the lineUp source for a swap function.
 function determineTargetSwap() {
     if (playerTurn) {
         attacker = player;
@@ -57,14 +57,14 @@ function determineTargetSwap() {
     }
 }
 
-//to be called after each turn ending event
+//to be called after each turn ending event. So far just I/Os playerTurn boolean
 function endTurn() {
     (playerTurn) ? playerTurn = false : playerTurn = true;
     (playerTurn) ? console.log("its your turn!") : (console.log("its the enemy's turn"))
 
 }
 
-//method to ease monster swap functionality
+//method to ease monster swap functionality. Swaps two elements by index.
 Array.prototype.swap = function (x, y) {
     var b = this[x];
     this[x] = this[y];
@@ -81,7 +81,7 @@ function calcPerc(percentage, num) {
 
 
 
-//to swap active monster for another in lineUp
+//swaps active monster for another from lineUp defined by name in function parameter (chosen)
 function swap(chosen) {
     determineTargetSwap();
     found = attacker.lineUp.find(element => element.name == chosen);
@@ -98,7 +98,7 @@ function swap(chosen) {
     }
 }
 
-//decides the cpu's action
+//decides the cpu's action. if current monster health is low: switch, otherwise, use a move.
 function cpuTurn() {
     determineTarget();
     if (attacker.currentHealth > 20 && attacker.lineUp.some(element => element.currentHealth > 0)) {
@@ -124,7 +124,7 @@ function cpuSwap() {
     }
 }
 
-// picks a random move for the cpu to use
+// picks a random move from current monster moves for the cpu to use
 function cpuMove() {
     determineTarget();
     random = Math.floor(Math.random() * attacker.moves.length);
