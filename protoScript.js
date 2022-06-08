@@ -41,9 +41,43 @@ function determineTarget() {
     console.log("attacker is " + attacker + ". target is " + target);
 }
 
+function determineTargetSwap() {
+    if (playerTurn) {
+        attacker = player;
+        target = cpu;
+    } else if (!playerTurn) {
+        attacker = cpu;
+        target = player;
+
+}
+}
+
 function endTurn() {
     (playerTurn) ? playerTurn = false : playerTurn = true;
 }
+
+Array.prototype.swap = function (x,y) {
+    var b = this[x];
+    this[x] = this[y];
+    this[y] = b;
+    return this;
+  }
+
+function swap(chosen) {
+    determineTargetSwap();
+    found = attacker.lineUp.find(element => element.name == chosen);
+    targetIndex = attacker.lineUp.indexOf(found);
+
+    console.log(targetIndex);
+
+    attacker.lineUp.swap(0,targetIndex);
+
+    console.log(attacker.lineUp[0]);
+    console.log(attacker.lineUp);
+    endTurn();
+    }
+
+
 
 function scratch() {
     determineTarget();
@@ -61,15 +95,13 @@ const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch]];
 
 let squirtle = new Monster (...squirtleData);
 let rockler = new Monster (...rocklerData);
+let rocklerCPU = new Monster (...rocklerData);
 
-const player = new Player ("aaron", [squirtle]);
+const player = new Player ("aaron", [squirtle, rockler]);
 const cpu = new Cpu ("bob", [rockler]);
 
-console.log(squirtle);
-console.log(rockler);
 
-console.log(player);
-console.log(cpu);
+swap('Rockler')
 
 
 
