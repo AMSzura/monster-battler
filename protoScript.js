@@ -52,23 +52,25 @@ function determineTargetSwap() {
         attacker = cpu;
         target = player;
 
-}
+    }
 }
 
 //to be called after each turn ending event
 function endTurn() {
     (playerTurn) ? playerTurn = false : playerTurn = true;
+
+
 }
 
 //method to ease monster swap functionality
-Array.prototype.swap = function (x,y) {
+Array.prototype.swap = function (x, y) {
     var b = this[x];
     this[x] = this[y];
     this[y] = b;
     return this;
-  }
+}
 
-  //to swap active monster for another in lineUp
+//to swap active monster for another in lineUp
 function swap(chosen) {
     determineTargetSwap();
     found = attacker.lineUp.find(element => element.name == chosen);
@@ -76,35 +78,51 @@ function swap(chosen) {
 
     console.log(targetIndex);
 
-    attacker.lineUp.swap(0,targetIndex);
+    attacker.lineUp.swap(0, targetIndex);
 
     console.log(attacker.lineUp[0]);
     console.log(attacker.lineUp);
     endTurn();
+}
+
+//decides the cpu's action
+function cpuTurn() {
+    determineTarget();
+    if (attacker.currentHealth > 20 && attacker.lineUp.some(element => element.health > 0)) {
+        cpuSwap();
+    } else {
+        cpuMove();
     }
+}
+
 
 
 // below are functions for each move type in the game
 
 function scratch() {
     determineTarget();
-    damage = attacker.attackVal/2;
-    defense = target.defenseVal/2;
-    target.currentHealth =- damage;
-    console.log(attacker.name + " hit " + target.name + " for " + damage + " damage!");
-    endTurn();
+    damage = attacker.attackVal / 2;
+    defense = target.defenseVal / 2;
+    target.currentHealth = - damage;
+
+    if (target.currentHealth < 0) {
+        target.currentHealth = 0;
     }
 
+    console.log(attacker.name + " hit " + target.name + " for " + damage + " damage!");
+    endTurn();
+}
 
-    //declarations for testing
+
+//declarations for testing
 
 const squirtleData = ["Squirtle", 100, "water", 14, 20, [scratch]];
 const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch]];
 
 
-let squirtle = new Monster (...squirtleData);
-let rockler = new Monster (...rocklerData);
-let rocklerCPU = new Monster (...rocklerData);
+let squirtle = new Monster(...squirtleData);
+let rockler = new Monster(...rocklerData);
+let rocklerCPU = new Monster(...rocklerData);
 
-const player = new Player ("aaron", [squirtle, rockler]);
-const cpu = new Cpu ("bob", [rockler]);
+const player = new Player("aaron", [squirtle, rockler]);
+const cpu = new Cpu("bob", [rockler]);
