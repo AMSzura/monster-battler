@@ -48,17 +48,57 @@ const moveBtn1 = document.getElementById("move1");
 const moveBtn2 = document.getElementById("move2");
 const moveBtn3 = document.getElementById("move3");
 const moveBtn4 = document.getElementById("move4");
+
+const attackBtn = document.getElementById("attack");
+
+const moveBtnArray = [moveBtn1, moveBtn2, moveBtn3, moveBtn4];
 const actionMenu = document.querySelector(".action-menu");
 const movesMenu = document.querySelector(".moves-menu");
 
+//declarations for testing
 
+const squirtleData = ["Squirtle", 100, "water", 14, 18, [scratch, growl]];
+const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch, growl]];
+
+
+let squirtle = new Monster(...squirtleData);
+let rockler = new Monster(...rocklerData);
+let rocklerCPU = new Monster(...rocklerData);
+
+const player = new Player("aaron", [squirtle, rockler]);
+const cpu = new Cpu("bob", [rockler, squirtle]);
+
+
+// shortening the reference variable for each move
+
+const move1 = player.lineUp[0].moves[0];
+const move2 = player.lineUp[0].moves[1];
+const move3 = player.lineUp[0].moves[2];
+const move4 = player.lineUp[0].moves[3];
+
+// event listeners, handlers, etc
+
+attackBtn.addEventListener('click', movesPopUp)
+
+moveBtn1.addEventListener('click', move1);
+moveBtn2.addEventListener('click', move2);
+moveBtn3.addEventListener('click', move3);
+moveBtn4.addEventListener('click', move4);
 
 // sets action menu to invisible, moves menu to display.
 function movesPopUp () {
     actionMenu.style.display = "none";
     movesMenu.style.display = "flex";
+
+    for (x = 0; x < 4; x++) {
+     moveBtnArray[x].textContent = player.lineUp[0].moves[x].name;             
+        }
+          
+    }
+
     
-}
+    
+
 
 
 
@@ -254,15 +294,3 @@ function growl() {
 
 
 
-//declarations for testing
-
-const squirtleData = ["Squirtle", 100, "water", 14, 18, [scratch, growl]];
-const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch, growl]];
-
-
-let squirtle = new Monster(...squirtleData);
-let rockler = new Monster(...rocklerData);
-let rocklerCPU = new Monster(...rocklerData);
-
-const player = new Player("aaron", [squirtle, rockler]);
-const cpu = new Cpu("bob", [rockler, squirtle]);
