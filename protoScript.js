@@ -26,6 +26,9 @@ class Monster {
         this.defenseVal = defenseVal;
         this.currentDefenseVal = defenseVal;
         this.moves = moves;
+        if (this.currentHealth > 0) {
+            this.currentHealth = 0;
+        }
     }
 }
 
@@ -33,6 +36,7 @@ class Monster {
 let target;
 let attacker;
 let playerTurn = true;
+let playerWon = false;
 
 //determines the target and source for an attack
 function determineTarget() {
@@ -170,6 +174,18 @@ function growl() {
 
 }
 
+//groups functions into battle structure
+function battle() {
+    if (player.lineUp.every(element => element.currentHealth == 0)) {
+        playerWon = true;
+        battlesWon =+ 1;
+        return;
+    } else if (cpu.lineUp.every(element => element.currentHealth == 0)){
+        playerWon = false;
+        battlesLost =+ 1;
+        return;
+    }
+}
 
 //declarations for testing
 
