@@ -26,7 +26,7 @@ class Monster {
         this.defenseVal = defenseVal;
         this.currentDefenseVal = defenseVal;
         this.moves = moves;
-        if (this.currentHealth > 0) {
+        if (this.currentHealth < 0) {
             this.currentHealth = 0;
         }
         this.isDead = false;
@@ -69,7 +69,7 @@ function determineTargetSwap() {
 function endTurn() {
     (playerTurn) ? playerTurn = false : playerTurn = true;
     (playerTurn) ? console.log("its your turn!") : (console.log("its the enemy's turn"))
-
+    return;
 }
 
 //method to ease monster swap functionality. Swaps two elements by index.
@@ -96,7 +96,7 @@ function swap(chosen) {
     targetIndex = attacker.lineUp.indexOf(found);
 
     console.log(targetIndex);
-
+    console.log("player swapped " + attacker.lineUp[0] + " for " + attacker.lineUp[targetIndex]);
     attacker.lineUp.swap(0, targetIndex);
 
     console.log(attacker.lineUp[0]);
@@ -108,8 +108,8 @@ function swap(chosen) {
 
 //decides the cpu's action. if current monster health is low: switch, otherwise, use a move.
 function cpuTurn() {
-    determineTarget();
-    if (attacker.currentHealth > 20 && attacker.lineUp.some(element => element.isDead == false)) {
+    determineTargetSwap();
+    if (attacker.currentHealth > 20 && attacker.lineUp.some(element => element.isDead === false)) {
         cpuSwap();
     } else {
         cpuMove();
@@ -121,10 +121,11 @@ function cpuSwap() {
     determineTargetSwap();
     console.log(attacker.lineUp[0]);
     console.log(attacker.lineUp[0].currentHealth);
-    found = attacker.lineUp.find(element => element.element.isDead == false && attacker.lineUp.indexOf(element) != 0);
+    found = attacker.lineUp.find(element => element.isDead === false && attacker.lineUp.indexOf(element) != 0);
     console.log(found);
     targetIndex = attacker.lineUp.indexOf(found);
     console.log(targetIndex)
+    console.log("cpu swapped " + attacker.lineUp[0] + " for " + attacker.lineUp[targetIndex]);
     attacker.lineUp.swap(0, targetIndex);
     console.log(attacker.lineUp[0]);
     if (playerTurn != true) {
@@ -196,13 +197,13 @@ function growl() {
 
 //groups functions into battle structure
 function battle() {
-    if (player.lineUp.every(element => element.isDead == true)) {
+    if (player.lineUp.every(element => element.isDead === true)) {
         playerWon = false;
         console.log("all your monsters are dead. You lose");
         battlesLost =+ 1;
         endBattle();
         return;
-    } else if (cpu.lineUp.every(element => element.isDead == true)){
+    } else if (cpu.lineUp.every(element => element.isDead === true)){
         playerWon = true;
         console.log("enemies monsters are dead. You win!");
         battlesWon =+ 1;
