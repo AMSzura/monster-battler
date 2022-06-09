@@ -83,3 +83,7 @@ footer {
     border-radius: 10px;
 }
 
+.invisible {
+    display: none;
+}
+
