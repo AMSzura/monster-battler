@@ -56,6 +56,13 @@ body {
     /* border: 3px double black; */
 }
 
+.moves-menu {
+    display: none;
+    width: 50%;
+    height: 100%;
+    font-size: 52px;
+}
+
 .column {
     display: flex;
     flex-direction: column;
@@ -72,6 +79,12 @@ body {
 .action-menu div {
     height: 100%;
     width: 100%;
+}
+
+.moves-menu  div {
+    height: 100%;
+    width: 100%;
+    
 }
 footer {
     background-color: cornflowerblue;

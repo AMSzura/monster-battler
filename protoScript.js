@@ -36,12 +36,38 @@ class Monster {
     }
 }
 
+
 //initial declarations/initialisations
 let target;
 let attacker;
 let playerTurn = true;
 let playerWon = false;
 let battleOn;
+
+const moveBtn1 = document.getElementById("move1");
+const moveBtn2 = document.getElementById("move2");
+const moveBtn3 = document.getElementById("move3");
+const moveBtn4 = document.getElementById("move4");
+const actionMenu = document.querySelector(".action-menu");
+const movesMenu = document.querySelector(".moves-menu");
+
+
+
+// sets action menu to invisible, moves menu to display.
+function movesPopUp () {
+    actionMenu.style.display = "none";
+    movesMenu.style.display = "flex";
+    
+}
+
+
+
+
+
+
+
+
+
 
 //determines the target and source for an attack
 function determineTarget() {
