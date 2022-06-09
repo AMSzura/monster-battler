@@ -44,6 +44,9 @@ let playerTurn = true;
 let playerWon = false;
 let battleOn;
 
+
+//dom element initialisations
+
 const moveBtn1 = document.getElementById("move1");
 const moveBtn2 = document.getElementById("move2");
 const moveBtn3 = document.getElementById("move3");
@@ -55,11 +58,12 @@ const moveBtnArray = [moveBtn1, moveBtn2, moveBtn3, moveBtn4];
 const actionMenu = document.querySelector(".action-menu");
 const movesMenu = document.querySelector(".moves-menu");
 
-//declarations for testing
+// individual monster info and stats data. To be grabbed when initialising monster object.
 
 const squirtleData = ["Squirtle", 100, "water", 14, 18, [scratch, growl]];
 const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch, growl]];
 
+//initialisations for testing purposes
 
 let squirtle = new Monster(...squirtleData);
 let rockler = new Monster(...rocklerData);
@@ -69,7 +73,7 @@ const player = new Player("aaron", [squirtle, rockler]);
 const cpu = new Cpu("bob", [rockler, squirtle]);
 
 
-// shortening the reference variable for each move
+// shortening the reference variable for each move. TO BE LATER PLACED IN BATTLE START FUNCTION!!!!!
 
 const move1 = player.lineUp[0].moves[0];
 const move2 = player.lineUp[0].moves[1];
@@ -86,23 +90,15 @@ moveBtn3.addEventListener('click', move3);
 moveBtn4.addEventListener('click', move4);
 
 // sets action menu to invisible, moves menu to display.
-function movesPopUp () {
+function movesPopUp() {
     actionMenu.style.display = "none";
     movesMenu.style.display = "flex";
 
     for (x = 0; x < 4; x++) {
-     moveBtnArray[x].textContent = player.lineUp[0].moves[x].name;             
-        }
-          
+        moveBtnArray[x].textContent = player.lineUp[0].moves[x].name;
     }
 
-    
-    
-
-
-
-
-
+}
 
 
 
@@ -110,6 +106,7 @@ function movesPopUp () {
 
 
 //determines the target and source for an attack
+
 function determineTarget() {
     if (playerTurn) {
         attacker = player.lineUp[0];
@@ -128,7 +125,6 @@ function determineTargetSwap() {
     } else if (!playerTurn) {
         attacker = cpu;
         target = player;
-
     }
 }
 
@@ -285,9 +281,7 @@ function growl() {
         console.log(target.name + "'s attack was reduced by " + damage);
         console.log(target.name + "'s attack is now " + target.currentAttackVal);
     }
-
     endTurn();
-
 }
 
 
