@@ -29,6 +29,10 @@ class Monster {
         if (this.currentHealth > 0) {
             this.currentHealth = 0;
         }
+        this.isDead = false;
+        if (this.currentHealth == 0) {
+            this.isDead = true;
+        }
     }
 }
 
@@ -105,7 +109,7 @@ function swap(chosen) {
 //decides the cpu's action. if current monster health is low: switch, otherwise, use a move.
 function cpuTurn() {
     determineTarget();
-    if (attacker.currentHealth > 20 && attacker.lineUp.some(element => element.currentHealth > 0)) {
+    if (attacker.currentHealth > 20 && attacker.lineUp.some(element => element.isDead == false)) {
         cpuSwap();
     } else {
         cpuMove();
@@ -117,7 +121,7 @@ function cpuSwap() {
     determineTargetSwap();
     console.log(attacker.lineUp[0]);
     console.log(attacker.lineUp[0].currentHealth);
-    found = attacker.lineUp.find(element => element.currentHealth > 0 && attacker.lineUp.indexOf(element) != 0);
+    found = attacker.lineUp.find(element => element.element.isDead == false && attacker.lineUp.indexOf(element) != 0);
     console.log(found);
     targetIndex = attacker.lineUp.indexOf(found);
     console.log(targetIndex)
@@ -133,6 +137,22 @@ function cpuMove() {
     determineTarget();
     random = Math.floor(Math.random() * attacker.moves.length);
     attacker.moves[random]();
+}
+
+//resets monster stat values to their totals
+function endBattle() {
+    for (let element of player.lineUp) {
+        element.currentHealth = element.totalHealth;
+        element.currentAttackVal = element.attackVal;
+        element.currentDefenseVal = element.defenseVal;
+        console.log("player monster's stats reset")
+      }
+    for (let element of cpu.lineUp) {
+        element.currentHealth = element.totalHealth;
+        element.currentAttackVal = element.attackVal;
+        element.currentDefenseVal = element.defenseVal;
+        console.log("cpu monster's stats reset")
+    }
 }
 
 
@@ -176,14 +196,22 @@ function growl() {
 
 //groups functions into battle structure
 function battle() {
-    if (player.lineUp.every(element => element.currentHealth == 0)) {
-        playerWon = true;
-        battlesWon =+ 1;
-        return;
-    } else if (cpu.lineUp.every(element => element.currentHealth == 0)){
+    if (player.lineUp.every(element => element.isDead == true)) {
         playerWon = false;
+        console.log("all your monsters are dead. You lose");
         battlesLost =+ 1;
+        endBattle();
         return;
+    } else if (cpu.lineUp.every(element => element.isDead == true)){
+        playerWon = true;
+        console.log("enemies monsters are dead. You win!");
+        battlesWon =+ 1;
+        endBattle();
+        return;
+    } else if (!playerTurn) {
+        cpuTurn();
+    } else {
+        console.log("your turn. what will you do?")
     }
 }
 
