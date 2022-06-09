@@ -41,6 +41,7 @@ let target;
 let attacker;
 let playerTurn = true;
 let playerWon = false;
+let battleOn;
 
 //determines the target and source for an attack
 function determineTarget() {
@@ -65,12 +66,7 @@ function determineTargetSwap() {
     }
 }
 
-//to be called after each turn ending event. So far just I/Os playerTurn boolean
-function endTurn() {
-    (playerTurn) ? playerTurn = false : playerTurn = true;
-    (playerTurn) ? console.log("its your turn!") : (console.log("its the enemy's turn"))
-    return;
-}
+
 
 //method to ease monster swap functionality. Swaps two elements by index.
 Array.prototype.swap = function (x, y) {
@@ -101,7 +97,7 @@ function swap(chosen) {
 
     console.log(attacker.lineUp[0]);
     console.log(attacker.lineUp);
-    if (playerTurn == true) {
+    if (playerTurn === true) {
         endTurn();
     }
 }
@@ -109,6 +105,7 @@ function swap(chosen) {
 //decides the cpu's action. if current monster health is low: switch, otherwise, use a move.
 function cpuTurn() {
     determineTargetSwap();
+    console.log("test");
     if (attacker.currentHealth > 20 && attacker.lineUp.some(element => element.isDead === false)) {
         cpuSwap();
     } else {
@@ -140,6 +137,37 @@ function cpuMove() {
     attacker.moves[random]();
 }
 
+
+//groups functions into battle structure
+function combat() {
+
+    if (player.lineUp.every(element => element.isDead === true)) {
+        playerWon = false;
+        console.log("all your monsters are dead. You lose");
+        battlesLost = + 1;
+        endBattle();
+        return;
+    } else if (cpu.lineUp.every(element => element.isDead === true)) {
+        playerWon = true;
+        console.log("enemies monsters are dead. You win!");
+        battlesWon = + 1;
+        endBattle();
+        return;
+    } else if (!playerTurn) {
+        console.log("cpuTurn");
+        cpuTurn();
+    } else if (playerTurn === true) {
+        console.log("your turn. what will you do?")
+    }
+}
+
+//to be called after each turn ending event. So far just I/Os playerTurn boolean
+function endTurn() {
+    (playerTurn) ? playerTurn = false : playerTurn = true;
+    (playerTurn) ? console.log("its your turn!") : (console.log("its the enemy's turn"));
+    combat()
+}
+
 //resets monster stat values to their totals
 function endBattle() {
     for (let element of player.lineUp) {
@@ -147,13 +175,14 @@ function endBattle() {
         element.currentAttackVal = element.attackVal;
         element.currentDefenseVal = element.defenseVal;
         console.log("player monster's stats reset")
-      }
+    }
     for (let element of cpu.lineUp) {
         element.currentHealth = element.totalHealth;
         element.currentAttackVal = element.attackVal;
         element.currentDefenseVal = element.defenseVal;
         console.log("cpu monster's stats reset")
     }
+    battleOn = false;
 }
 
 
@@ -195,26 +224,9 @@ function growl() {
 
 }
 
-//groups functions into battle structure
-function battle() {
-    if (player.lineUp.every(element => element.isDead === true)) {
-        playerWon = false;
-        console.log("all your monsters are dead. You lose");
-        battlesLost =+ 1;
-        endBattle();
-        return;
-    } else if (cpu.lineUp.every(element => element.isDead === true)){
-        playerWon = true;
-        console.log("enemies monsters are dead. You win!");
-        battlesWon =+ 1;
-        endBattle();
-        return;
-    } else if (!playerTurn) {
-        cpuTurn();
-    } else {
-        console.log("your turn. what will you do?")
-    }
-}
+
+
+
 
 //declarations for testing
 
@@ -228,5 +240,3 @@ let rocklerCPU = new Monster(...rocklerData);
 
 const player = new Player("aaron", [squirtle, rockler]);
 const cpu = new Cpu("bob", [rockler, squirtle]);
-
-playerTurn = true;
