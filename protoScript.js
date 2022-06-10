@@ -94,6 +94,22 @@ Cpu.prototype.turn = function () {
     }
 }
 
+//method to ease monster swap functionality. Swaps two elements by index.
+Array.prototype.swap = function (x, y) {
+    console.log("swap is being called")
+    var b = this[x];
+    this[x] = this[y];
+    this[y] = b;
+    return this;
+}
+
+//function to calculate percentage
+
+function calcPerc(percentage, num) {
+    result = num * (percentage / 100);
+    return parseFloat(result.toFixed(2));
+}
+
 
 //initial declarations/initialisations
 let target;
@@ -182,40 +198,7 @@ function determineTarget() {
 }
 
 
-//method to ease monster swap functionality. Swaps two elements by index.
-Array.prototype.swap = function (x, y) {
-    console.log("swap is being called")
-    var b = this[x];
-    this[x] = this[y];
-    this[y] = b;
-    return this;
-}
 
-//function to calculate percentage
-
-function calcPerc(percentage, num) {
-    result = num * (percentage / 100);
-    return parseFloat(result.toFixed(2));
-}
-
-
-
-//swaps active monster for another from lineUp defined by name in function parameter (chosen)
-function swap(chosen) {
-    determineTarget();
-    found = player.lineUp.find(element => element.name == chosen);
-    targetIndex = player.lineUp.indexOf(found);
-
-    console.log(targetIndex);
-    console.log("player swapped " + player.lineUp[0].name + " for " + player.lineUp[targetIndex].name);
-    player.lineUp.swap(0, targetIndex);
-
-    console.log(player.lineUp[0]);
-    console.log(player.lineUp);
-    if (playerTurn === true) {
-        endTurn();
-    }
-}
 
 //groups functions into battle structure
 function combat() {
@@ -253,12 +236,14 @@ function endBattle() {
         element.currentHealth = element.totalHealth;
         element.currentAttackVal = element.attackVal;
         element.currentDefenseVal = element.defenseVal;
+        element.isDead = false;
         console.log("player monster's stats reset")
     }
     for (let element of cpu.lineUp) {
         element.currentHealth = element.totalHealth;
         element.currentAttackVal = element.attackVal;
         element.currentDefenseVal = element.defenseVal;
+        element.isDead = false;
         console.log("cpu monster's stats reset")
     }
     battleOn = false;
