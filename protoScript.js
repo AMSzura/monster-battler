@@ -153,7 +153,12 @@ function movesPopUp() {
     movesMenu.style.display = "flex";
 
     for (x = 0; x < 4; x++) {
-        moveBtnArray[x].textContent = player.lineUp[0].moves[x].name;
+        if (player.lineUp[0].moves[x] === undefined) {
+            continue;
+        } else {
+            moveBtnArray[x].textContent = player.lineUp[0].moves[x].name;            
+        }
+
     }
 }
 
