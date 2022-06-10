@@ -7,8 +7,6 @@ class Actor {
     }
 }
 
-
-
 // class for constructing the player object
 class Player extends Actor {
     constructor(name, lineUp) {
@@ -124,14 +122,6 @@ let rocklerCPU = new Monster(...rocklerData);
 const player = new Player("aaron", [squirtle, rockler]);
 const cpu = new Cpu("bob", [rockler, squirtle]);
 
-
-// shortening the reference variable for each move. TO BE LATER PLACED IN BATTLE START FUNCTION!!!!!
-
-// const move1 = player.lineUp[0].moves[0];
-// const move2 = player.lineUp[0].moves[1];
-// const move3 = player.lineUp[0].moves[2];
-// const move4 = player.lineUp[0].moves[3];
-
 // event listeners, handlers, etc
 
 attackBtn.addEventListener('click', movesPopUp)
@@ -157,18 +147,12 @@ function movesPopUp() {
     for (x = 0; x < 4; x++) {
         moveBtnArray[x].textContent = player.lineUp[0].moves[x].name;
     }
-
 }
 
 function movesPopUpClose() {
     actionMenu.style.display = "flex";
     movesMenu.style.display = "none";
 }
-
-
-
-
-
 
 //determines the target and source for an attack
 
@@ -220,18 +204,6 @@ function swap(chosen) {
     }
 }
 
-//decides the cpu's action. if current monster health is low: switch, otherwise, use a move.
-function cpuTurn() {
-    determineTarget();
-    console.log("test");
-    if (cpu.currentHealth > 20 && cpu.lineUp.some(element => element.isDead === false)) {
-        cpu.swap();
-    } else {
-        cpu.attack();
-    }
-}
-
-
 //groups functions into battle structure
 function combat() {
 
@@ -278,8 +250,6 @@ function endBattle() {
     }
     battleOn = false;
 }
-
-
 
 // below are functions for each move type in the game
 
