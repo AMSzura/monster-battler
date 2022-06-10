@@ -51,6 +51,18 @@ Player.prototype.attack = function (input) {
     endTurn();
 }
 
+Player.prototype.swap = function (chosen) {
+    determineTarget();
+    found = player.lineUp.find(element => element.name == chosen);
+    targetIndex = player.lineUp.indexOf(found);
+    console.log("player swapped " + player.lineUp[0].name + " for " + player.lineUp[targetIndex].name);
+    player.lineUp.swap(0, targetIndex);
+    player.currentMonster = player.lineUp[0];
+    if (playerTurn === true) {
+        endTurn();
+    }
+}
+
 Cpu.prototype.attack = function () {
     console.log("cpu attack is being called");
     determineTarget();
@@ -62,15 +74,11 @@ Cpu.prototype.attack = function () {
 
 Cpu.prototype.swap = function () {
     determineTarget();
-    console.log(cpu.lineUp[0]);
-    console.log(cpu.lineUp[0].currentHealth);
     found = cpu.lineUp.find(element => element.isDead === false && cpu.lineUp.indexOf(element) != 0);
-    console.log(found);
     targetIndex = cpu.lineUp.indexOf(found);
-    console.log(targetIndex)
-    console.log("cpu swapped " + cpu.lineUp[0] + " for " + cpu.lineUp[targetIndex]);
+    console.log("cpu swapped " + cpu.lineUp[0].name + " for " + cpu.lineUp[targetIndex].name);
     cpu.lineUp.swap(0, targetIndex);
-    console.log(cpu.lineUp[0]);
+    cpu.currentMonster = cpu.lineUp[0];
     if (playerTurn != true) {
         endTurn();
     }
@@ -79,7 +87,7 @@ Cpu.prototype.swap = function () {
 Cpu.prototype.turn = function () {
     determineTarget();
     console.log("test");
-    if (cpu.currentHealth > 20 && cpu.lineUp.some(element => element.isDead === false)) {
+    if (cpu.currentMonster.currentHealth < 20 && cpu.lineUp.some(element => element.isDead === false)) {
         cpu.swap();
     } else {
         cpu.attack();
@@ -189,16 +197,16 @@ function calcPerc(percentage, num) {
 
 //swaps active monster for another from lineUp defined by name in function parameter (chosen)
 function swap(chosen) {
-    determineTargetSwap();
-    found = attacker.lineUp.find(element => element.name == chosen);
-    targetIndex = attacker.lineUp.indexOf(found);
+    determineTarget();
+    found = player.lineUp.find(element => element.name == chosen);
+    targetIndex = player.lineUp.indexOf(found);
 
     console.log(targetIndex);
-    console.log("player swapped " + attacker.lineUp[0] + " for " + attacker.lineUp[targetIndex]);
-    attacker.lineUp.swap(0, targetIndex);
+    console.log("player swapped " + player.lineUp[0].name + " for " + player.lineUp[targetIndex].name);
+    player.lineUp.swap(0, targetIndex);
 
-    console.log(attacker.lineUp[0]);
-    console.log(attacker.lineUp);
+    console.log(player.lineUp[0]);
+    console.log(player.lineUp);
     if (playerTurn === true) {
         endTurn();
     }
