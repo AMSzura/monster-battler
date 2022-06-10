@@ -61,6 +61,22 @@ Cpu.prototype.attack = function () {
 
 }
 
+Cpu.prototype.swap = function () {
+    determineTarget();
+    console.log(cpu.lineUp[0]);
+    console.log(cpu.lineUp[0].currentHealth);
+    found = cpu.lineUp.find(element => element.isDead === false && cpu.lineUp.indexOf(element) != 0);
+    console.log(found);
+    targetIndex = cpu.lineUp.indexOf(found);
+    console.log(targetIndex)
+    console.log("cpu swapped " + cpu.lineUp[0] + " for " + cpu.lineUp[targetIndex]);
+    cpu.lineUp.swap(0, targetIndex);
+    console.log(cpu.lineUp[0]);
+    if (playerTurn != true) {
+        endTurn();
+    }
+}
+
 
 //initial declarations/initialisations
 let target;
@@ -226,13 +242,6 @@ function cpuSwap() {
     if (playerTurn != true) {
         endTurn();
     }
-}
-
-// picks a random move from current monster moves for the cpu to use
-function cpuMove() {
-    determineTarget();
-    random = Math.floor(Math.random() * attacker.moves.length);
-    attacker.moves[random]();
 }
 
 
