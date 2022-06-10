@@ -143,10 +143,12 @@ function movesPopUp() {
 function determineTarget() {
     if (playerTurn) {
         trainer = player;
-        target = cpu.currentMonster;
+        enemy = cpu;
+        target = enemy.currentMonster;
     } else if (!playerTurn) {
         trainer = cpu;
-        target = player.currentMonster;
+        enemy = player;
+        target = enemy.currentMonster;
     }
 }
 
