@@ -168,18 +168,6 @@ function determineTarget() {
     }
 }
 
-//determines the lineUp source for a swap function.
-function determineTargetSwap() {
-    if (playerTurn) {
-        attacker = player;
-        target = cpu;
-    } else if (!playerTurn) {
-        attacker = cpu;
-        target = player;
-    }
-}
-
-
 
 //method to ease monster swap functionality. Swaps two elements by index.
 Array.prototype.swap = function (x, y) {
@@ -224,23 +212,6 @@ function cpuTurn() {
         cpuSwap();
     } else {
         cpu.attack();
-    }
-}
-
-// cpu monster swapping mechanic. swaps to another monster that is not dead and is not the current monster.
-function cpuSwap() {
-    determineTargetSwap();
-    console.log(attacker.lineUp[0]);
-    console.log(attacker.lineUp[0].currentHealth);
-    found = attacker.lineUp.find(element => element.isDead === false && attacker.lineUp.indexOf(element) != 0);
-    console.log(found);
-    targetIndex = attacker.lineUp.indexOf(found);
-    console.log(targetIndex)
-    console.log("cpu swapped " + attacker.lineUp[0] + " for " + attacker.lineUp[targetIndex]);
-    attacker.lineUp.swap(0, targetIndex);
-    console.log(attacker.lineUp[0]);
-    if (playerTurn != true) {
-        endTurn();
     }
 }
 
