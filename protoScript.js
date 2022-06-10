@@ -52,6 +52,15 @@ Player.prototype.attack = function (input) {
     endTurn();
 }
 
+Cpu.prototype.attack = function () {
+    console.log("cpu attack is being called");
+    determineTarget();
+    random = Math.floor(Math.random() * trainer.currentMonster.moves.length);
+    trainer.currentMonster.moves[random]();
+    endTurn();
+
+}
+
 
 //initial declarations/initialisations
 let target;
@@ -196,7 +205,7 @@ function cpuTurn() {
     if (attacker.currentHealth > 20 && attacker.lineUp.some(element => element.isDead === false)) {
         cpuSwap();
     } else {
-        cpuMove();
+        cpu.attack();
     }
 }
 
@@ -252,7 +261,7 @@ function combat() {
 function endTurn() {
     (playerTurn) ? playerTurn = false : playerTurn = true;
     (playerTurn) ? console.log("its your turn!") : (console.log("its the enemy's turn"));
-    combat()
+    combat();
 }
 
 //resets monster stat values to their totals
@@ -292,9 +301,8 @@ function scratch() {
 }
 
 function growl() {
-    determineTarget();
-    console.log(attacker.name + " used growl!");
-    damage = attacker.currentAttackVal / 8;
+    console.log(trainer.currentMonster.name + " used growl!");
+    damage = trainer.currentMonster.currentAttackVal / 8;
     damage = Math.round(damage);
     y = target.attackVal;
     if (target.currentAttackVal <= calcPerc(50, y)) {
@@ -304,7 +312,6 @@ function growl() {
         console.log(target.name + "'s attack was reduced by " + damage);
         console.log(target.name + "'s attack is now " + target.currentAttackVal);
     }
-    endTurn();
 }
 
 
