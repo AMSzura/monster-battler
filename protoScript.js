@@ -47,6 +47,7 @@ class Monster {
 
 Player.prototype.attack = function (input) {
     console.log("attack is being called");
+    movesPopUpClose();
     determineTarget();
     input();
     endTurn();
@@ -74,6 +75,16 @@ Cpu.prototype.swap = function () {
     console.log(cpu.lineUp[0]);
     if (playerTurn != true) {
         endTurn();
+    }
+}
+
+Cpu.prototype.turn = function () {
+    determineTarget();
+    console.log("test");
+    if (cpu.currentHealth > 20 && cpu.lineUp.some(element => element.isDead === false)) {
+        cpu.swap();
+    } else {
+        cpu.attack();
     }
 }
 
@@ -149,6 +160,11 @@ function movesPopUp() {
 
 }
 
+function movesPopUpClose() {
+    actionMenu.style.display = "flex";
+    movesMenu.style.display = "none";
+}
+
 
 
 
@@ -206,10 +222,10 @@ function swap(chosen) {
 
 //decides the cpu's action. if current monster health is low: switch, otherwise, use a move.
 function cpuTurn() {
-    determineTargetSwap();
+    determineTarget();
     console.log("test");
-    if (attacker.currentHealth > 20 && attacker.lineUp.some(element => element.isDead === false)) {
-        cpuSwap();
+    if (cpu.currentHealth > 20 && cpu.lineUp.some(element => element.isDead === false)) {
+        cpu.swap();
     } else {
         cpu.attack();
     }
@@ -232,8 +248,8 @@ function combat() {
         endBattle();
         return;
     } else if (!playerTurn) {
-        console.log("cpuTurn");
-        cpuTurn();
+        console.log("the enemy is taking their turn");
+        cpu.turn();
     } else if (playerTurn === true) {
         console.log("your turn. what will you do?")
     }
