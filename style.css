@@ -48,6 +48,14 @@ body {
     height: 100%;
 }
 
+.switch-menu {
+    display: none;
+    width: 50%;
+    height: 100%;
+    font-size: 52px;
+    background-color: aqua;
+}
+
 .action-menu {
     display: flex;
     width: 50%;
