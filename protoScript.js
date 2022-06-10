@@ -1,16 +1,26 @@
-// class for constructing the player object
-class Player {
+class Actor {
     constructor(name, lineUp) {
         this.name = name;
         this.lineUp = lineUp;
+        this.currentMonster = lineUp[0];
+
+    }
+}
+
+
+
+// class for constructing the player object
+class Player extends Actor {
+    constructor(name, lineUp) {
+        super(name, lineUp);
+
     }
 }
 
 // class for constructing the computer opponent object
-class Cpu {
+class Cpu extends Actor {
     constructor(name, lineUp) {
-        this.name = name;
-        this.lineUp = lineUp;
+        super(name, lineUp);
     }
 }
 
@@ -26,13 +36,12 @@ class Monster {
         this.defenseVal = defenseVal;
         this.currentDefenseVal = defenseVal;
         this.moves = moves;
-        if (this.currentHealth < 0) {
-            this.currentHealth = 0;
-        }
+        this.move1 = moves[0];
+        this.move2 = moves[1];
+        this.move3 = moves[2];
+        this.move4 = moves[3];
         this.isDead = false;
-        if (this.currentHealth == 0) {
-            this.isDead = true;
-        }
+        
     }
 }
 
@@ -75,19 +84,19 @@ const cpu = new Cpu("bob", [rockler, squirtle]);
 
 // shortening the reference variable for each move. TO BE LATER PLACED IN BATTLE START FUNCTION!!!!!
 
-const move1 = player.lineUp[0].moves[0];
-const move2 = player.lineUp[0].moves[1];
-const move3 = player.lineUp[0].moves[2];
-const move4 = player.lineUp[0].moves[3];
+// const move1 = player.lineUp[0].moves[0];
+// const move2 = player.lineUp[0].moves[1];
+// const move3 = player.lineUp[0].moves[2];
+// const move4 = player.lineUp[0].moves[3];
 
 // event listeners, handlers, etc
 
 attackBtn.addEventListener('click', movesPopUp)
 
-moveBtn1.addEventListener('click', move1);
-moveBtn2.addEventListener('click', move2);
-moveBtn3.addEventListener('click', move3);
-moveBtn4.addEventListener('click', move4);
+moveBtn1.addEventListener('click', player.currentMonster.move1);
+moveBtn2.addEventListener('click', player.currentMonster.move2);
+moveBtn3.addEventListener('click', player.currentMonster.move3);
+moveBtn4.addEventListener('click', player.currentMonster.move4);
 
 // sets action menu to invisible, moves menu to display.
 function movesPopUp() {
