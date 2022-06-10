@@ -45,6 +45,13 @@ class Monster {
     }
 }
 
+Player.prototype.attack = function (input) {
+    console.log("attack is being called");
+    determineTarget();
+    input();
+    endTurn();
+}
+
 
 //initial declarations/initialisations
 let target;
@@ -93,10 +100,18 @@ const cpu = new Cpu("bob", [rockler, squirtle]);
 
 attackBtn.addEventListener('click', movesPopUp)
 
-moveBtn1.addEventListener('click', player.currentMonster.move1);
-moveBtn2.addEventListener('click', player.currentMonster.move2);
-moveBtn3.addEventListener('click', player.currentMonster.move3);
-moveBtn4.addEventListener('click', player.currentMonster.move4);
+moveBtn1.addEventListener('click', function() {
+    player.attack(player.currentMonster.move1);
+});
+moveBtn2.addEventListener('click', function() {
+    player.attack(player.currentMonster.move2);
+});
+moveBtn3.addEventListener('click', function() {
+    player.attack(player.currentMonster.move3);
+});
+moveBtn4.addEventListener('click', function() {
+    player.attack(player.currentMonster.move4);
+});
 
 // sets action menu to invisible, moves menu to display.
 function movesPopUp() {
@@ -118,11 +133,11 @@ function movesPopUp() {
 
 function determineTarget() {
     if (playerTurn) {
-        attacker = player.lineUp[0];
-        target = cpu.lineUp[0];
+        trainer = player;
+        target = cpu.currentMonster;
     } else if (!playerTurn) {
-        attacker = cpu.lineUp[0];
-        target = player.lineUp[0];
+        trainer = cpu;
+        target = player.currentMonster;
     }
 }
 
@@ -141,6 +156,7 @@ function determineTargetSwap() {
 
 //method to ease monster swap functionality. Swaps two elements by index.
 Array.prototype.swap = function (x, y) {
+    console.log("swap is being called")
     var b = this[x];
     this[x] = this[y];
     this[y] = b;
@@ -261,10 +277,9 @@ function endBattle() {
 // below are functions for each move type in the game
 
 function scratch() {
-    determineTarget();
-    console.log(attacker.name + " used scratch");
-    damage = attacker.currentAttackVal;
-    console.log(attacker.name + "'s attack value is " + attacker.currentAttackVal);
+    console.log(trainer.currentMonster.name + " used scratch");
+    damage = trainer.currentMonster.currentAttackVal;
+    console.log(trainer.currentMonster.name + "'s attack value is " + trainer.currentMonster.currentAttackVal);
     console.log("initial damage is " + damage);
     defense = target.currentDefenseVal / 8;
     damage = damage - defense;
@@ -272,9 +287,8 @@ function scratch() {
     damage = Math.round(damage);
     target.currentHealth = target.currentHealth - damage;
 
-    console.log(attacker.name + " hit " + target.name + " for " + damage + " damage!");
+    console.log(trainer.currentMonster.name + " hit " + target.name + " for " + damage + " damage!");
     console.log(target.name + "'s health is now " + target.currentHealth);
-    endTurn();
 }
 
 function growl() {
