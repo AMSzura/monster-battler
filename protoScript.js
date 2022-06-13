@@ -44,22 +44,34 @@ class Monster {
 }
 
 Player.prototype.attack = function (input) {
-    console.log("attack is being called");
-    movesPopUpClose();
-    determineTarget();
-    input();
-    endTurn();
+    if (player.currentMonster.isDead) {
+        console.log("your " + player.currentMonster.name
+         + " is dead. Please switch to a living monster")
+    } else {
+        console.log("attack is being called");
+        movesPopUpClose();
+        determineTarget();
+        input();
+        checkDead();
+        endTurn();
+    }
+
 }
 
 Player.prototype.swap = function (chosen) {
+    let deadSwap = false;
     determineTarget();
+    if (player.currentMonster.isDead === true) {
+        deadSwap = true;
+    }
     found = player.lineUp.find(element => element == chosen);
     targetIndex = player.lineUp.indexOf(found);
     console.log("player swapped " + player.lineUp[0].name + " for " + player.lineUp[targetIndex].name);
     player.lineUp.swap(0, targetIndex);
     player.currentMonster = player.lineUp[0];
     switchPopUpClose();
-    if (playerTurn === true) {
+    if (!deadSwap) {
+        deadSwap = false;
         endTurn();
     }
 }
@@ -69,6 +81,7 @@ Cpu.prototype.attack = function () {
     determineTarget();
     random = Math.floor(Math.random() * trainer.currentMonster.moves.length);
     trainer.currentMonster.moves[random]();
+    checkDead();
     endTurn();
 
 }
@@ -164,12 +177,22 @@ const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch, growl]];
 
 //initialisations for testing purposes
 
-let squirtle = new Monster(...squirtleData);
-let rockler = new Monster(...rocklerData);
-let rocklerCPU = new Monster(...rocklerData);
+// let squirtle = new Monster(...squirtleData);
+// let rockler = new Monster(...rocklerData);
+// let rocklerCPU = new Monster(...rocklerData);
 
-const player = new Player("aaron", [squirtle, rockler]);
-const cpu = new Cpu("bob", [rockler, squirtle]);
+const player = new Player("aaron", []);
+const cpu = new Cpu("bob", []);
+
+player.lineUp[0] = new Monster(...squirtleData);
+player.lineUp[1] = new Monster(...rocklerData);
+cpu.lineUp[0] = new Monster(...rocklerData);
+cpu.lineUp[1] = new Monster(...squirtleData);
+
+//THESE TWO TO BE PUT IN BATTLE INIT FUNC!!!!!!!
+
+player.currentMonster = player.lineUp[0];
+cpu.currentMonster = cpu.lineUp[0];
 
 // event listeners, handlers, etc
 
@@ -262,6 +285,13 @@ function determineTarget() {
     }
 }
 
+function checkDead() {
+    if (player.lineUp[0].currentHealth <= 0) {
+        player.lineUp[0].isDead = true;
+    } else if (cpu.lineUp[0].currentHealth <= 0) {
+        cpu.lineUp[0].isDead = true;
+    }
+}
 
 
 
@@ -290,15 +320,14 @@ function combat() {
 
 //to be called after each turn ending event. So far just I/Os playerTurn boolean
 function endTurn() {
-    if (player.lineUp[0].currentHealth <= 0) {
-        player.lineUp[0].isDead = true;
-        player.swap();
-    } else if (cpu.lineUp[0].currentHealth <= 0) {
-        cpu.lineUp[0].isDead = true;
+
+    if (cpu.lineUp[0].isDead == true) {
         cpu.swap();
     }
+
     (playerTurn) ? playerTurn = false : playerTurn = true;
     (playerTurn) ? console.log("its your turn!") : (console.log("its the enemy's turn"));
+
     combat();
 }
 
