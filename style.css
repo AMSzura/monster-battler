@@ -4,6 +4,7 @@
 }
 
 body {
+    font-family: pixel;
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -15,7 +16,6 @@ body {
 .navBar {
     margin: 0;
     display: flex;
-    background-color: cornflowerblue;
 }
 
 .start-display {
@@ -49,20 +49,31 @@ body {
     height:80vh;
     width: 1200px;
     border: 3px double black;
+    background-color: bisque;
     border-radius: 10px;
 }
 
+.screen {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: bisque;
+    height: 65%;
+}
+
 .enemy-space {
-    height: 33%;
+    height: 50%;
     display: flex;
     flex-direction: row-reverse;
     justify-content:flex-start;
+    background-color: white;
 }
 
 .player-space {
-    height: 33%;
+    height: 50%;
     display: flex;
     justify-content: flex-start;
+    background-color: white;
 }
 
 .player-monster-info {
@@ -100,7 +111,7 @@ body {
 .action-bar {
     padding: 5px;
     display: flex;
-    height: 33%;
+    height: 35%;
     gap: 5px;
 }
 

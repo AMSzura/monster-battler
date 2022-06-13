@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Monster Battle</title>
 </head>
+
 <body>
     <nav class="navBar">
         <h1>Monster Battle!</h1>
@@ -18,24 +20,27 @@
     </div>
 
     <div class="battle-display">
+        <div class="screen">
+            <div class="enemy-space">
+                <div class="enemy-monster"><img id="enemy-monster-img" src="" alt=""></div>
+                <div class="enemy-monster-info">
+                    <p id="enemy-monster-name"></p>
+                    <div class="health-bar" id="enemy-health"></div>
+                </div>
+                <div class="enemy-line-up-thumbs"></div>
 
-        <div class="enemy-space">
-            <div class="enemy-monster"><img id="enemy-monster-img" src="" alt=""></div>
-            <div class="enemy-monster-info">
-                <p id="enemy-monster-name"></p>
-                <div class="health-bar" id="enemy-health"></div>
             </div>
-            <div class="enemy-line-up-thumbs"></div>
+            <div class="player-space">
+                <div class="player-monster"><img id="player-monster-img" src="" alt=""></div>
+                <div class="player-monster-info">
+                    <div class="health-bar" id="player-health"></div>
+                    <p id="player-monster-name"></p>
+                </div>
+                <div class="player-line-up-thumbs"></div>
+            </div>
 
         </div>
-        <div class="player-space">
-            <div class="player-monster"><img id="player-monster-img" src="" alt=""></div>
-            <div class= "player-monster-info">
-                <div class="health-bar" id="player-health"></div>
-                <p id="player-monster-name"></p>
-            </div>
-            <div class="player-line-up-thumbs"></div>
-        </div>
+
         <div class="action-bar">
 
             <div class="log">
@@ -88,6 +93,7 @@
     </footer>
 
 
-    
+
 </body>
+
 </html>
