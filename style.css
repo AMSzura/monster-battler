@@ -28,16 +28,29 @@ body {
     border-radius: 10px;
 }
 
-.enemy-info {
+.enemy-space {
     height: 33%;
     display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
 }
 
-.player-info {
+.player-space {
     height: 33%;
     display: flex;
+    justify-content: space-around;
 }
 
+.player-monster {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-monster img {
+    height: 256px;
+    width: 512px;
+}
 .action-bar {
     padding: 5px;
     display: flex;
