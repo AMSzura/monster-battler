@@ -24,7 +24,7 @@ class Cpu extends Actor {
 
 // class for constructing individual monster objects
 class Monster {
-    constructor(name, totalHealth, element, attackVal, defenseVal, moves) {
+    constructor(name, totalHealth, element, attackVal, defenseVal, moves, imgFront, imgBack) {
         this.name = name;
         this.totalHealth = totalHealth;
         this.currentHealth = totalHealth;
@@ -33,6 +33,8 @@ class Monster {
         this.currentAttackVal = attackVal;
         this.defenseVal = defenseVal;
         this.currentDefenseVal = defenseVal;
+        this.imgFront = imgFront;
+        this.imgBack = imgBack;
         this.moves = moves;
         this.move1 = moves[0];
         this.move2 = moves[1];
@@ -172,8 +174,8 @@ const switchMenu = document.querySelector(".switch-menu");
 
 // individual monster info and stats data. To be grabbed when initialising monster object.
 
-const squirtleData = ["Squirtle", 100, "water", 14, 18, [scratch, growl]];
-const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch, growl]];
+const squirtleData = ["Raccoon", 100, "normal", 14, 18, [scratch, growl], images/monsters/raccoonStretch.png, images/monsters/raccoonBack.png];
+const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch, growl], images/monsters/rocklerStretch.png, images/monsters/rocklerBack.png];
 
 //initialisations for testing purposes
 
