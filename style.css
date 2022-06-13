@@ -30,10 +30,12 @@ body {
 
 .enemy-info {
     height: 33%;
+    display: flex;
 }
 
 .player-info {
     height: 33%;
+    display: flex;
 }
 
 .action-bar {
