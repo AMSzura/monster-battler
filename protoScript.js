@@ -53,11 +53,12 @@ Player.prototype.attack = function (input) {
 
 Player.prototype.swap = function (chosen) {
     determineTarget();
-    found = player.lineUp.find(element => element.name == chosen);
+    found = player.lineUp.find(element => element == chosen);
     targetIndex = player.lineUp.indexOf(found);
     console.log("player swapped " + player.lineUp[0].name + " for " + player.lineUp[targetIndex].name);
     player.lineUp.swap(0, targetIndex);
     player.currentMonster = player.lineUp[0];
+    switchPopUpClose();
     if (playerTurn === true) {
         endTurn();
     }
@@ -121,16 +122,40 @@ let battleOn;
 
 //dom element initialisations
 
+// const dom = {
+//     switchMenu : document.querySelector(".switch-menu"),
+
+// },
+
+//     monsterBtn1 : document.getElementById("switch1"),
+//     monsterBtn2 : document.getElementById("switch2"),
+//     monsterBtn3 : document.getElementById("switch3"),
+//     monsterBtn4 : document.getElementById("switch4"),
+//     monsterBtn5 : document.getElementById("switch5"),
+
+// }
+
+const attackBtn = document.getElementById("attack");
+
 const moveBtn1 = document.getElementById("move1");
 const moveBtn2 = document.getElementById("move2");
 const moveBtn3 = document.getElementById("move3");
 const moveBtn4 = document.getElementById("move4");
-
-const attackBtn = document.getElementById("attack");
-
 const moveBtnArray = [moveBtn1, moveBtn2, moveBtn3, moveBtn4];
+
+const switchBtn = document.getElementById("switch");
+
+const monsterBtn1 = document.getElementById("switch1");
+const monsterBtn2 = document.getElementById("switch2");
+const monsterBtn3 = document.getElementById("switch3");
+const monsterBtn4 = document.getElementById("switch4");
+const monsterBtn5 = document.getElementById("switch5");
+const monsterBtnArray = [monsterBtn1, monsterBtn2, monsterBtn3, monsterBtn4, monsterBtn5];
+
+
 const actionMenu = document.querySelector(".action-menu");
 const movesMenu = document.querySelector(".moves-menu");
+const switchMenu = document.querySelector(".switch-menu"); 
 
 // individual monster info and stats data. To be grabbed when initialising monster object.
 
@@ -148,7 +173,9 @@ const cpu = new Cpu("bob", [rockler, squirtle]);
 
 // event listeners, handlers, etc
 
-attackBtn.addEventListener('click', movesPopUp)
+attackBtn.addEventListener('click', movesPopUp);
+
+switchBtn.addEventListener('click', switchPopUp);
 
 moveBtn1.addEventListener('click', function() {
     player.attack(player.currentMonster.move1);
@@ -161,6 +188,23 @@ moveBtn3.addEventListener('click', function() {
 });
 moveBtn4.addEventListener('click', function() {
     player.attack(player.currentMonster.move4);
+});
+
+monsterBtn1.addEventListener("click", function() {
+    player.swap(player.lineUp[1]);
+});
+monsterBtn2.addEventListener("click", function() {
+    player.swap(player.lineUp[2]);
+});
+
+monsterBtn3.addEventListener("click", function() {
+    player.swap(player.lineUp[3]);
+});
+monsterBtn4.addEventListener("click", function() {
+    player.swap(player.lineUp[4]);
+});
+monsterBtn5.addEventListener("click", function() {
+    player.swap(player.lineUp[5]);
 });
 
 // sets action menu to invisible, moves menu to display.
@@ -178,12 +222,33 @@ function movesPopUp() {
     }
 }
 
+//reverses Pop up function
 function movesPopUpClose() {
     actionMenu.style.display = "flex";
     movesMenu.style.display = "none";
 }
 
-//determines the target and source for an attack
+// sets action menu invisible, switch menu to display
+ function switchPopUp() {    
+    actionMenu.style.display = "none";
+    switchMenu.style.display = "flex";
+
+    for (x = 1; x < 5; x++) {
+        if (player.lineUp[x] == undefined) {
+            continue;
+        } else {
+            monsterBtnArray[x-1].textContent = player.lineUp[x].name;
+        }
+
+    }
+ }
+
+ function switchPopUpClose() {
+    actionMenu.style.display = "flex";
+    switchMenu.style.display = "none";
+ }
+
+// determines the target and source for an attack
 
 function determineTarget() {
     if (playerTurn) {
@@ -225,6 +290,13 @@ function combat() {
 
 //to be called after each turn ending event. So far just I/Os playerTurn boolean
 function endTurn() {
+    if (player.lineUp[0].currentHealth <= 0) {
+        player.lineUp[0].isDead = true;
+        player.swap();
+    } else if (cpu.lineUp[0].currentHealth <= 0) {
+        cpu.lineUp[0].isDead = true;
+        cpu.swap();
+    }
     (playerTurn) ? playerTurn = false : playerTurn = true;
     (playerTurn) ? console.log("its your turn!") : (console.log("its the enemy's turn"));
     combat();

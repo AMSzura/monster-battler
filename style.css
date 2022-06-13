@@ -50,6 +50,7 @@ body {
 
 .switch-menu {
     display: none;
+    flex-direction: column;
     width: 50%;
     height: 100%;
     font-size: 52px;
@@ -71,6 +72,12 @@ body {
     font-size: 52px;
 }
 
+.switch-button{
+
+    height: 128px;
+    width: 128px;
+    background-color: aqua;
+}
 .column {
     display: flex;
     flex-direction: column;
@@ -84,6 +91,19 @@ body {
     
 }
 
+.row {
+ display: flex;
+ justify-content: space-evenly;
+ align-items: center;   
+}
+
+.row div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .action-menu div {
     height: 100%;
     width: 100%;
@@ -93,6 +113,12 @@ body {
     height: 100%;
     width: 100%;
     
+}
+
+.switch-menu div {
+    height: 100%;
+    width: 100%;
+    font-size: small;
 }
 footer {
     background-color: cornflowerblue;
