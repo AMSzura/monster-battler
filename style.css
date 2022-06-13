@@ -56,14 +56,27 @@ body {
     height: 33%;
     display: flex;
     flex-direction: row-reverse;
-    justify-content: space-around;
+    justify-content:flex-start;
 }
 
 .player-space {
     height: 33%;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
 }
+
+.player-monster-info {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 10px 5px;
+}
+
+.enemy-monster-info {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 5px;
+   }
+
 
 .player-monster {
     display: flex;
@@ -75,6 +88,15 @@ body {
     height: 256px;
     width: 512px;
 }
+
+
+
+.health-bar {
+    height: 5px;
+    width: 200px;
+    background-color: green;
+}
+
 .action-bar {
     padding: 5px;
     display: flex;
@@ -82,10 +104,15 @@ body {
     gap: 5px;
 }
 
+.menu-button {
+    background-color: azure;
+}
+
 .log {
     width: 50%;
     height: 100%;
 }
+
 
 .switch-menu {
     display: none;
@@ -111,11 +138,15 @@ body {
     font-size: 52px;
 }
 
+.move-button {
+    background-color: azure;
+}
+
 .switch-button{
 
     height: 128px;
     width: 128px;
-    background-color: aqua;
+    background-color:azure;
 }
 .column {
     display: flex;
@@ -157,7 +188,7 @@ body {
 .switch-menu div {
     height: 100%;
     width: 100%;
-    font-size: small;
+    font-size: medium;
 }
 footer {
     background-color: cornflowerblue;

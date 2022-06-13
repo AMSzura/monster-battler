@@ -72,6 +72,7 @@ Player.prototype.swap = function (chosen) {
     player.lineUp.swap(0, targetIndex);
     player.currentMonster = player.lineUp[0];
     playerMonsterImg.src = player.currentMonster.imgBack;
+    playerMonsterName.textContent = player.currentMonster.name;
     switchPopUpClose();
     if (!deadSwap) {
         deadSwap = false;
@@ -97,6 +98,7 @@ Cpu.prototype.swap = function () {
     cpu.lineUp.swap(0, targetIndex);
     cpu.currentMonster = cpu.lineUp[0];
     cpuMonsterImg.src = cpu.currentMonster.imgFront;
+    cpuMonsterName.textContent = cpu.currentMonster.name;
     if (playerTurn != true) {
         endTurn();
     }
@@ -147,6 +149,8 @@ function battleInit() {
     battleDisplay.style.display = "flex";
     playerMonsterImg.src = player.currentMonster.imgBack;
     cpuMonsterImg.src = cpu.currentMonster.imgFront;
+    playerMonsterName.textContent = player.currentMonster.name;
+    cpuMonsterName.textContent = cpu.currentMonster.name;
 }
 
 
@@ -184,6 +188,9 @@ const monsterBtnArray = [monsterBtn1, monsterBtn2, monsterBtn3, monsterBtn4, mon
 
 const playerMonsterImg = document.getElementById("player-monster-img");
 const cpuMonsterImg = document.getElementById("enemy-monster-img");
+
+const playerMonsterName = document.getElementById("player-monster-name");
+const cpuMonsterName = document.getElementById("enemy-monster-name");
 
 
 const actionMenu = document.querySelector(".action-menu");
