@@ -41,14 +41,14 @@ class Monster {
         this.move3 = moves[2];
         this.move4 = moves[3];
         this.isDead = false;
-        
+
     }
 }
 
 Player.prototype.attack = function (input) {
     if (player.currentMonster.isDead) {
         console.log("your " + player.currentMonster.name
-         + " is dead. Please switch to a living monster")
+            + " is dead. Please switch to a living monster")
     } else {
         console.log("attack is being called");
         movesPopUpClose();
@@ -128,29 +128,42 @@ function calcPerc(percentage, num) {
     return parseFloat(result.toFixed(2));
 }
 
+//on start button click initalises chosen data to game objects. Contains inits for test purposes.
+function battleInit() {
+
+    player = new Player("aaron", []);
+    cpu = new Cpu("bob", []);
+
+    player.lineUp[0] = new Monster(...squirtleData);
+    player.lineUp[1] = new Monster(...rocklerData);
+    cpu.lineUp[0] = new Monster(...rocklerData);
+    cpu.lineUp[1] = new Monster(...squirtleData);
+
+
+    player.currentMonster = player.lineUp[0];
+    cpu.currentMonster = cpu.lineUp[0];
+
+    startDisplay.style.display = "none";
+    battleDisplay.style.display = "flex";
+    playerMonsterImg.src = player.currentMonster.imgBack;
+    cpuMonsterImg.src = cpu.currentMonster.imgFront;
+}
+
 
 //initial declarations/initialisations
+
 let target;
 let attacker;
 let playerTurn = true;
 let playerWon = false;
 let battleOn;
-
+let player;
+let cpu;
 
 //dom element initialisations
 
-// const dom = {
-//     switchMenu : document.querySelector(".switch-menu"),
 
-// },
-
-//     monsterBtn1 : document.getElementById("switch1"),
-//     monsterBtn2 : document.getElementById("switch2"),
-//     monsterBtn3 : document.getElementById("switch3"),
-//     monsterBtn4 : document.getElementById("switch4"),
-//     monsterBtn5 : document.getElementById("switch5"),
-
-// }
+const startBtn = document.getElementById("start-button")
 
 const attackBtn = document.getElementById("attack");
 
@@ -175,7 +188,10 @@ const cpuMonsterImg = document.getElementById("enemy-monster-img");
 
 const actionMenu = document.querySelector(".action-menu");
 const movesMenu = document.querySelector(".moves-menu");
-const switchMenu = document.querySelector(".switch-menu"); 
+const switchMenu = document.querySelector(".switch-menu");
+
+const startDisplay = document.querySelector(".start-display");
+const battleDisplay = document.querySelector(".battle-display");
 
 // individual monster info and stats data. To be grabbed when initialising monster object.
 
@@ -188,52 +204,43 @@ const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch, growl], "images/m
 // let rockler = new Monster(...rocklerData);
 // let rocklerCPU = new Monster(...rocklerData);
 
-const player = new Player("aaron", []);
-const cpu = new Cpu("bob", []);
 
-player.lineUp[0] = new Monster(...squirtleData);
-player.lineUp[1] = new Monster(...rocklerData);
-cpu.lineUp[0] = new Monster(...rocklerData);
-cpu.lineUp[1] = new Monster(...squirtleData);
-
-//THESE TWO TO BE PUT IN BATTLE INIT FUNC!!!!!!!
-
-player.currentMonster = player.lineUp[0];
-cpu.currentMonster = cpu.lineUp[0];
 
 // event listeners, handlers, etc
+
+startBtn.addEventListener('click', battleInit);
 
 attackBtn.addEventListener('click', movesPopUp);
 
 switchBtn.addEventListener('click', switchPopUp);
 
-moveBtn1.addEventListener('click', function() {
+moveBtn1.addEventListener('click', function () {
     player.attack(player.currentMonster.move1);
 });
-moveBtn2.addEventListener('click', function() {
+moveBtn2.addEventListener('click', function () {
     player.attack(player.currentMonster.move2);
 });
-moveBtn3.addEventListener('click', function() {
+moveBtn3.addEventListener('click', function () {
     player.attack(player.currentMonster.move3);
 });
-moveBtn4.addEventListener('click', function() {
+moveBtn4.addEventListener('click', function () {
     player.attack(player.currentMonster.move4);
 });
 
-monsterBtn1.addEventListener("click", function() {
+monsterBtn1.addEventListener("click", function () {
     player.swap(player.lineUp[1]);
 });
-monsterBtn2.addEventListener("click", function() {
+monsterBtn2.addEventListener("click", function () {
     player.swap(player.lineUp[2]);
 });
 
-monsterBtn3.addEventListener("click", function() {
+monsterBtn3.addEventListener("click", function () {
     player.swap(player.lineUp[3]);
 });
-monsterBtn4.addEventListener("click", function() {
+monsterBtn4.addEventListener("click", function () {
     player.swap(player.lineUp[4]);
 });
-monsterBtn5.addEventListener("click", function() {
+monsterBtn5.addEventListener("click", function () {
     player.swap(player.lineUp[5]);
 });
 
@@ -246,7 +253,7 @@ function movesPopUp() {
         if (player.lineUp[0].moves[x] === undefined) {
             continue;
         } else {
-            moveBtnArray[x].textContent = player.lineUp[0].moves[x].name;            
+            moveBtnArray[x].textContent = player.lineUp[0].moves[x].name;
         }
 
     }
@@ -259,7 +266,7 @@ function movesPopUpClose() {
 }
 
 // sets action menu invisible, switch menu to display
- function switchPopUp() {    
+function switchPopUp() {
     actionMenu.style.display = "none";
     switchMenu.style.display = "flex";
 
@@ -267,16 +274,16 @@ function movesPopUpClose() {
         if (player.lineUp[x] == undefined) {
             continue;
         } else {
-            monsterBtnArray[x-1].textContent = player.lineUp[x].name;
+            monsterBtnArray[x - 1].textContent = player.lineUp[x].name;
         }
 
     }
- }
+}
 
- function switchPopUpClose() {
+function switchPopUpClose() {
     actionMenu.style.display = "flex";
     switchMenu.style.display = "none";
- }
+}
 
 // determines the target and source for an attack
 

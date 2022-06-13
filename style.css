@@ -18,9 +18,33 @@ body {
     background-color: cornflowerblue;
 }
 
-.battle-display {
+.start-display {
     font-family: pixel;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:80vh;
+    width: 1200px;
+    border: 3px double black;
+    border-radius: 10px;
+}
+
+#start-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 64px;
+    width: 128px;
+    background-color: azure;
+    border: 3px double black;
+    border-radius: 10px;
+    box-shadow: 5px 3px 3px
+}
+
+.battle-display {
+    font-family: pixel;
+    display: none;
     flex-direction: column;
     height:80vh;
     width: 1200px;
