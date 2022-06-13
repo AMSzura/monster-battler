@@ -21,6 +21,7 @@ body {
 }
 
 .start-display {
+    background-color:#ce9c85;
     font-family: pixel;
     display: flex;
     flex-direction: column;
@@ -28,7 +29,7 @@ body {
     align-items: center;
     height:80vh;
     width: 1200px;
-    border: 3px double black;
+    border: 10px double black;
     border-radius: 10px;
 }
 
@@ -38,7 +39,7 @@ body {
     align-items: center;
     height: 64px;
     width: 128px;
-    background-color: azure;
+    background-color:#f7c4a5;
     border: 3px double black;
     border-radius: 10px;
     box-shadow: 5px 3px 3px
@@ -50,24 +51,28 @@ body {
     flex-direction: column;
     height:80vh;
     width: 1200px;
+    /* min-width: 70%; */
     border: 10px double black;
     background-color: #ce9c85;
     border-radius: 10px;
     padding: 10px;
+    box-shadow: 5px 3px 3px;
 }
 
 .screen {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     /* padding: 10px; */
     /* background-color: bisque; */
     height: 65%;
     border: 10px double black ;
     border-radius: 10px;
+    
 }
 
 .enemy-space {
-    /* height: 45%; */
+    height: 50%;
     display: flex;
     flex-direction: row-reverse;
     justify-content:flex-start;
@@ -79,7 +84,7 @@ body {
 }
 
 .player-space {
-    /* height: 45%; */
+    height: 50%;
     display: flex;
     justify-content: flex-start;
     background-color: #f4f4f4;
@@ -137,6 +142,8 @@ body {
     width: 50%;
     border: 10px double black;
     background-color: #f7c4a5;
+    border-radius: 10px;
+    box-shadow: 5px 3px 3px;
 }
 
 
@@ -146,7 +153,6 @@ body {
     width: 50%;
     height: 100%;
     font-size: 52px;
-    background-color: azure;
 }
 
 .action-menu {
@@ -169,6 +175,7 @@ body {
 .button {
     background-color: #f7c4a5;
     border: 10px double black;
+    box-shadow: 5px 3px 3px;
 }
 
 .switch-button{
