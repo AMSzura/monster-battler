@@ -71,6 +71,7 @@ Player.prototype.swap = function (chosen) {
     console.log("player swapped " + player.lineUp[0].name + " for " + player.lineUp[targetIndex].name);
     player.lineUp.swap(0, targetIndex);
     player.currentMonster = player.lineUp[0];
+    playerMonsterImg.src = player.currentMonster.imgBack;
     switchPopUpClose();
     if (!deadSwap) {
         deadSwap = false;
@@ -95,6 +96,7 @@ Cpu.prototype.swap = function () {
     console.log("cpu swapped " + cpu.lineUp[0].name + " for " + cpu.lineUp[targetIndex].name);
     cpu.lineUp.swap(0, targetIndex);
     cpu.currentMonster = cpu.lineUp[0];
+    cpuMonsterImg.src = cpu.currentMonster.imgFront;
     if (playerTurn != true) {
         endTurn();
     }
@@ -167,6 +169,9 @@ const monsterBtn4 = document.getElementById("switch4");
 const monsterBtn5 = document.getElementById("switch5");
 const monsterBtnArray = [monsterBtn1, monsterBtn2, monsterBtn3, monsterBtn4, monsterBtn5];
 
+const playerMonsterImg = document.getElementById("player-monster-img");
+const cpuMonsterImg = document.getElementById("enemy-monster-img");
+
 
 const actionMenu = document.querySelector(".action-menu");
 const movesMenu = document.querySelector(".moves-menu");
@@ -174,8 +179,8 @@ const switchMenu = document.querySelector(".switch-menu");
 
 // individual monster info and stats data. To be grabbed when initialising monster object.
 
-const squirtleData = ["Raccoon", 100, "normal", 14, 18, [scratch, growl], images/monsters/raccoonStretch.png, images/monsters/raccoonBack.png];
-const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch, growl], images/monsters/rocklerStretch.png, images/monsters/rocklerBack.png];
+const squirtleData = ["Raccoon", 100, "normal", 14, 18, [scratch, growl], "images/monsters/raccoonStretch.png", "images/monsters/raccoonBack.png"];
+const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch, growl], "images/monsters/rocklerStretch.png", "images/monsters/rocklerBack.png"];
 
 //initialisations for testing purposes
 
