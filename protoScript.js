@@ -45,11 +45,18 @@ class Monster {
     }
 }
 
+
+
 Player.prototype.attack = function (input) {
     if (player.currentMonster.isDead) {
         print.log("your " + player.currentMonster.name
             + " is dead. Please switch to a living monster")
     } else {
+        playerMonsterImg.addEventListener('animationend', () => {
+        playerMonsterImg.classList.remove("player-attack");
+        });
+        playerMonsterImg.classList.add("player-attack");
+
         print.log(player.name + "'s " + player.currentMonster.name + " is using " + input.name + "!");
         movesPopUpClose();
         determineTarget();
@@ -124,6 +131,7 @@ print = {
         newPara = document.createElement("p");
         newPara.textContent = text;
         log.appendChild(newPara);
+        log.scrollTo(0,9999999999);
 
     }
 }

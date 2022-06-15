@@ -3,6 +3,26 @@
     src: url(font/visitor1.ttf);
 }
 
+@keyframes player-attack {
+
+    /* from {
+        transform: translateX(0);
+        transform: translateY(0);
+    } */
+
+    50% {
+        transform: translateX(100px);
+    }
+}
+
+.player-monster-img.player-attack {
+
+    animation-duration: 0.3s;
+    animation-name: player-attack;
+    animation-timing-function: ease-out;
+}
+
+
 body {
     font-family: pixel;
     height: 100vh;
@@ -147,6 +167,7 @@ body {
     border-radius: 10px;
     box-shadow: 5px 3px 3px;
     overflow: auto;
+    
 }
 
 
