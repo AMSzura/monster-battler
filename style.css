@@ -11,7 +11,8 @@
     } */
 
     50% {
-        transform: translateX(100px);
+        transform: translate(100px, -20px);
+       /* transform: translateY(-20px); */
     }
 }
 
