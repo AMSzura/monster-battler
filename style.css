@@ -134,16 +134,19 @@ body {
     padding: 20px;
     display: flex;
     height: 35%;
+    max-height: 35%;
     gap: 20px;
 }
 
 
 .log {
     width: 50%;
+    height: 200px;
     border: 10px double black;
     background-color: #f7c4a5;
     border-radius: 10px;
     box-shadow: 5px 3px 3px;
+    overflow: auto;
 }
 
 
@@ -176,6 +179,14 @@ body {
     background-color: #f7c4a5;
     border: 10px double black;
     box-shadow: 5px 3px 3px;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.7, 0, 0.2, 1);
+    transform: translate3d(-4px, -4px, 0);
+}
+
+.button:hover {
+    transform: translate3d(-8px, -8px, 0);
+
 }
 
 .switch-button{

@@ -47,14 +47,16 @@ class Monster {
 
 Player.prototype.attack = function (input) {
     if (player.currentMonster.isDead) {
-        console.log("your " + player.currentMonster.name
+        print.log("your " + player.currentMonster.name
             + " is dead. Please switch to a living monster")
     } else {
-        console.log("attack is being called");
+        print.log(player.name + "'s " + player.currentMonster.name + " is using " + input.name + "!");
         movesPopUpClose();
         determineTarget();
         input();
+        print.log("the " + input.name + " hit " + target.name +  " for " + damage + " damage!")
         checkDead();
+        print.log(target.name + "'s health is now " + target.currentHealth);
         endTurn();
     }
 
@@ -68,7 +70,7 @@ Player.prototype.swap = function (chosen) {
     }
     found = player.lineUp.find(element => element == chosen);
     targetIndex = player.lineUp.indexOf(found);
-    console.log("player swapped " + player.lineUp[0].name + " for " + player.lineUp[targetIndex].name);
+    print.log("player swapped " + player.lineUp[0].name + " for " + player.lineUp[targetIndex].name);
     player.lineUp.swap(0, targetIndex);
     player.currentMonster = player.lineUp[0];
     playerMonsterImg.src = player.currentMonster.imgBack;
@@ -81,11 +83,13 @@ Player.prototype.swap = function (chosen) {
 }
 
 Cpu.prototype.attack = function () {
-    console.log("cpu attack is being called");
+
     determineTarget();
     random = Math.floor(Math.random() * trainer.currentMonster.moves.length);
+    print.log("the enemy's " + trainer.currentMonster.name + " used " + trainer.currentMonster.moves[random].name + "!");
     trainer.currentMonster.moves[random]();
     checkDead();
+    print.log("the " + trainer.currentMonster.name + "'s " + trainer.currentMonster.moves[random].name + " did " + damage + "damage!");
     endTurn();
 
 }
@@ -94,7 +98,7 @@ Cpu.prototype.swap = function () {
     determineTarget();
     found = cpu.lineUp.find(element => element.isDead === false && cpu.lineUp.indexOf(element) != 0);
     targetIndex = cpu.lineUp.indexOf(found);
-    console.log("cpu swapped " + cpu.lineUp[0].name + " for " + cpu.lineUp[targetIndex].name);
+    print.log("cpu swapped " + cpu.lineUp[0].name + " for " + cpu.lineUp[targetIndex].name);
     cpu.lineUp.swap(0, targetIndex);
     cpu.currentMonster = cpu.lineUp[0];
     cpuMonsterImg.src = cpu.currentMonster.imgFront;
@@ -106,7 +110,6 @@ Cpu.prototype.swap = function () {
 
 Cpu.prototype.turn = function () {
     determineTarget();
-    console.log("test");
     if (cpu.currentMonster.currentHealth < 20 && cpu.lineUp.some(element => element.isDead === false)) {
         cpu.swap();
     } else {
@@ -114,9 +117,19 @@ Cpu.prototype.turn = function () {
     }
 }
 
+
+print = {
+    log(text) {
+        
+        newPara = document.createElement("p");
+        newPara.textContent = text;
+        log.appendChild(newPara);
+
+    }
+}
+
 //method to ease monster swap functionality. Swaps two elements by index.
 Array.prototype.swap = function (x, y) {
-    console.log("swap is being called")
     var b = this[x];
     this[x] = this[y];
     this[y] = b;
@@ -199,6 +212,8 @@ const switchMenu = document.querySelector(".switch-menu");
 
 const startDisplay = document.querySelector(".start-display");
 const battleDisplay = document.querySelector(".battle-display");
+
+const log = document.querySelector(".log");
 
 // individual monster info and stats data. To be grabbed when initialising monster object.
 
@@ -321,21 +336,21 @@ function combat() {
 
     if (player.lineUp.every(element => element.isDead === true)) {
         playerWon = false;
-        console.log("all your monsters are dead. You lose");
+        print.log("all your monsters are dead. You lose");
         battlesLost = + 1;
         endBattle();
         return;
     } else if (cpu.lineUp.every(element => element.isDead === true)) {
         playerWon = true;
-        console.log("enemies monsters are dead. You win!");
+        print.log("enemies monsters are dead. You win!");
         battlesWon = + 1;
         endBattle();
         return;
     } else if (!playerTurn) {
-        console.log("the enemy is taking their turn");
+        print.log("It's the enemy's turn!");
         cpu.turn();
     } else if (playerTurn === true) {
-        console.log("your turn. what will you do?")
+        print.log("your turn. what will you do?")
     }
 }
 
@@ -345,10 +360,7 @@ function endTurn() {
     if (cpu.lineUp[0].isDead == true) {
         cpu.swap();
     }
-
     (playerTurn) ? playerTurn = false : playerTurn = true;
-    (playerTurn) ? console.log("its your turn!") : (console.log("its the enemy's turn"));
-
     combat();
 }
 
@@ -359,14 +371,14 @@ function endBattle() {
         element.currentAttackVal = element.attackVal;
         element.currentDefenseVal = element.defenseVal;
         element.isDead = false;
-        console.log("player monster's stats reset")
+        print.log("player monster's stats reset")
     }
     for (let element of cpu.lineUp) {
         element.currentHealth = element.totalHealth;
         element.currentAttackVal = element.attackVal;
         element.currentDefenseVal = element.defenseVal;
         element.isDead = false;
-        console.log("cpu monster's stats reset")
+        print.log("cpu monster's stats reset")
     }
     battleOn = false;
 }
@@ -374,31 +386,23 @@ function endBattle() {
 // below are functions for each move type in the game
 
 function scratch() {
-    console.log(trainer.currentMonster.name + " used scratch");
     damage = trainer.currentMonster.currentAttackVal;
-    console.log(trainer.currentMonster.name + "'s attack value is " + trainer.currentMonster.currentAttackVal);
-    console.log("initial damage is " + damage);
     defense = target.currentDefenseVal / 8;
     damage = damage - defense;
-    console.log("damage after reduction is " + damage);
     damage = Math.round(damage);
     target.currentHealth = target.currentHealth - damage;
-
-    console.log(trainer.currentMonster.name + " hit " + target.name + " for " + damage + " damage!");
-    console.log(target.name + "'s health is now " + target.currentHealth);
 }
 
 function growl() {
-    console.log(trainer.currentMonster.name + " used growl!");
     damage = trainer.currentMonster.currentAttackVal / 8;
     damage = Math.round(damage);
     y = target.attackVal;
     if (target.currentAttackVal <= calcPerc(50, y)) {
-        console.log("the growl had no effect");
+        print.log("the growl had no effect");
     } else {
         target.currentAttackVal = target.currentAttackVal - damage;
-        console.log(target.name + "'s attack was reduced by " + damage);
-        console.log(target.name + "'s attack is now " + target.currentAttackVal);
+        print.log(target.name + "'s attack was reduced by " + damage);
+        print.log(target.name + "'s attack is now " + target.currentAttackVal);
     }
 }
 
