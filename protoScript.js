@@ -45,6 +45,25 @@ class Monster {
     }
 }
 
+const anim = {
+    player : {
+        attack() {
+            playerMonsterImg.addEventListener('animationend', () => {
+                playerMonsterImg.classList.remove("player-attack");
+                });
+                playerMonsterImg.classList.add("player-attack");        
+        }
+    },
+    cpu : {
+        attack() {
+            cpuMonsterImg.addEventListener('animationend', () => {
+                cpuMonsterImg.classList.remove("enemy-attack");
+                });
+                cpuMonsterImg.classList.add("enemy-attack");   
+        }
+    }
+}
+
 
 
 Player.prototype.attack = function (input) {
@@ -52,11 +71,7 @@ Player.prototype.attack = function (input) {
         print.log("your " + player.currentMonster.name
             + " is dead. Please switch to a living monster")
     } else {
-        playerMonsterImg.addEventListener('animationend', () => {
-        playerMonsterImg.classList.remove("player-attack");
-        });
-        playerMonsterImg.classList.add("player-attack");
-
+        anim.player.attack();
         print.log(player.name + "'s " + player.currentMonster.name + " is using " + input.name + "!");
         movesPopUpClose();
         determineTarget();
@@ -92,6 +107,7 @@ Player.prototype.swap = function (chosen) {
 Cpu.prototype.attack = function () {
 
     determineTarget();
+    anim.cpu.attack();
     random = Math.floor(Math.random() * trainer.currentMonster.moves.length);
     print.log("the enemy's " + trainer.currentMonster.name + " used " + trainer.currentMonster.moves[random].name + "!");
     trainer.currentMonster.moves[random]();
@@ -127,11 +143,12 @@ Cpu.prototype.turn = function () {
 
 print = {
     log(text) {
-        
-        newPara = document.createElement("p");
-        newPara.textContent = text;
-        log.appendChild(newPara);
-        log.scrollTo(0,9999999999);
+        setTimeout(function () {
+            newPara = document.createElement("p");
+            newPara.textContent = text;
+            log.appendChild(newPara);
+            log.scrollTo(0,9999999999);
+        }, 500)
 
     }
 }

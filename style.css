@@ -10,10 +10,24 @@
     }
 }
 
+@keyframes enemy-attack {
+
+    50% {
+        transform: translate(-80px, 15px);
+    }
+}
+
+
 .player-monster-img.player-attack {
 
     animation-duration: 0.3s;
     animation-name: player-attack;
+    animation-timing-function: ease-out;
+}
+
+.enemy-monster-img.enemy-attack {
+    animation-duration: 0.3s;
+    animation-name: enemy-attack;
     animation-timing-function: ease-out;
 }
 
