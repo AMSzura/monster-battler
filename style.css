@@ -17,6 +17,14 @@
     }
 }
 
+.announcer {
+    display: none;
+    flex-wrap: wrap;
+    height: 100%;
+    width:100%;
+    background-color: aqua;
+    font-size: larger;
+}
 
 .player-monster-img.player-attack {
 

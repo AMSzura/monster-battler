@@ -45,6 +45,11 @@ class Monster {
     }
 }
 
+dom = {
+    announcer: document.querySelector(".announcer"),
+    actionBar: document.querySelector(".action-bar"),
+}
+
 const anim = {
     player : {
         attack() {
@@ -150,7 +155,24 @@ print = {
             log.scrollTo(0,9999999999);
         }, 500)
 
-    }
+    },
+    announcer(text) {
+        announcer.popUp();
+        announcement = document.createElement("h3");
+        announcement.textContent = text;
+        dom.announcer.replaceChildren(announcement);
+    },
+}
+
+announcer = {
+    popUp() {
+        dom.actionBar.style.display = "none";
+        dom.announcer.style.display = "flex";
+    },
+   close() {
+        dom.actionBar.style.display = "flex";
+        dom.announcer.style.display = "none";
+}
 }
 
 //method to ease monster swap functionality. Swaps two elements by index.
@@ -239,6 +261,8 @@ const startDisplay = document.querySelector(".start-display");
 const battleDisplay = document.querySelector(".battle-display");
 
 const log = document.querySelector(".log");
+
+// const announcer = document.querySelector(".announcer");
 
 // individual monster info and stats data. To be grabbed when initialising monster object.
 
