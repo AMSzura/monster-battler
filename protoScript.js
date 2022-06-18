@@ -57,6 +57,12 @@ const anim = {
                 playerMonsterImg.classList.remove("player-attack");
             });
             playerMonsterImg.classList.add("player-attack");
+        },
+        takeDamage() {
+            playerMonsterImg.addEventListener('animationend', () => {
+                playerMonsterImg.classList.remove("take-damage");
+            });
+            playerMonsterImg.classList.add("take-damage");
         }
     },
     cpu: {
@@ -65,6 +71,12 @@ const anim = {
                 cpuMonsterImg.classList.remove("enemy-attack");
             });
             cpuMonsterImg.classList.add("enemy-attack");
+        },
+        takeDamage() {
+            cpuMonsterImg.addEventListener('animationend', () => {
+                cpuMonsterImg.classList.remove("take-damage");
+            });
+            cpuMonsterImg.classList.add("take-damage");
         }
     }
 }
@@ -78,6 +90,7 @@ Player.prototype.attack = function (input) {
         dom.announcer.onclick = announcer.close;
     } else {
         anim.player.attack();
+        anim.cpu.takeDamage();
         print.announcer(player.name + "'s " + player.currentMonster.name + " is using " + input.name + "!");
         dom.announcer.onclick = function () {
             announcer.close();
@@ -122,6 +135,7 @@ Cpu.prototype.attack = function () {
 
     determineTarget();
     anim.cpu.attack();
+    anim.player.takeDamage();
     random = Math.floor(Math.random() * trainer.currentMonster.moves.length);
     print.announcer("the enemy's " + trainer.currentMonster.name + " is using  "
         + trainer.currentMonster.moves[random].name + "!");

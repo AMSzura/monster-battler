@@ -19,7 +19,7 @@
 
 @keyframes take-damage {
     50% {
-        visibility: hidden;
+        opacity: 0;
     }
 }
 
@@ -49,12 +49,14 @@
 }
 
 .player-monster-img.take-damage {
+    animation-delay: 0.3s;
     animation-duration: 0.2s;
     animation-name: take-damage;
     animation-iteration-count: 3;
 }
 
 .enemy-monster-img.take-damage {
+    animation-delay: 0.3s;
     animation-duration: 0.2s;
     animation-name: take-damage;
     animation-iteration-count: 3;
