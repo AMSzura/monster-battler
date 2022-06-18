@@ -51,20 +51,20 @@ dom = {
 }
 
 const anim = {
-    player : {
+    player: {
         attack() {
             playerMonsterImg.addEventListener('animationend', () => {
                 playerMonsterImg.classList.remove("player-attack");
-                });
-                playerMonsterImg.classList.add("player-attack");        
+            });
+            playerMonsterImg.classList.add("player-attack");
         }
     },
-    cpu : {
+    cpu: {
         attack() {
             cpuMonsterImg.addEventListener('animationend', () => {
                 cpuMonsterImg.classList.remove("enemy-attack");
-                });
-                cpuMonsterImg.classList.add("enemy-attack");   
+            });
+            cpuMonsterImg.classList.add("enemy-attack");
         }
     }
 }
@@ -73,18 +73,27 @@ const anim = {
 
 Player.prototype.attack = function (input) {
     if (player.currentMonster.isDead) {
-        print.log("your " + player.currentMonster.name
-            + " is dead. Please switch to a living monster")
+        print.announcer("your " + player.currentMonster.name
+            + " is dead. Please switch to a living monster");
+        dom.announcer.onclick = announcer.close;
     } else {
         anim.player.attack();
-        print.log(player.name + "'s " + player.currentMonster.name + " is using " + input.name + "!");
-        movesPopUpClose();
-        determineTarget();
-        input();
-        print.log("the " + input.name + " hit " + target.name +  " for " + damage + " damage!")
-        checkDead();
-        print.log(target.name + "'s health is now " + target.currentHealth);
-        endTurn();
+        print.announcer(player.name + "'s " + player.currentMonster.name + " is using " + input.name + "!");
+        dom.announcer.onclick = function () {
+            announcer.close();
+            movesPopUpClose();
+            determineTarget();
+            input();
+            print.announcer("the " + input.name + " hit " + target.name + " for " + damage + " damage!");
+            dom.announcer.onclick = function () {
+                announcer.close();
+                checkDead();
+                endTurn();
+            }
+
+
+        }
+
     }
 
 }
@@ -114,11 +123,26 @@ Cpu.prototype.attack = function () {
     determineTarget();
     anim.cpu.attack();
     random = Math.floor(Math.random() * trainer.currentMonster.moves.length);
-    print.log("the enemy's " + trainer.currentMonster.name + " used " + trainer.currentMonster.moves[random].name + "!");
-    trainer.currentMonster.moves[random]();
-    checkDead();
-    print.log("the " + trainer.currentMonster.name + "'s " + trainer.currentMonster.moves[random].name + " did " + damage + "damage!");
-    endTurn();
+    print.announcer("the enemy's " + trainer.currentMonster.name + " is using  "
+        + trainer.currentMonster.moves[random].name + "!");
+    dom.announcer.onclick = function () {
+
+        announcer.close();
+        trainer.currentMonster.moves[random]()
+        print.announcer("the " + trainer.currentMonster.name + "'s " +
+            trainer.currentMonster.moves[random].name + " did " + damage + "damage!");
+        dom.announcer.onclick = function () {
+            announcer.close();
+            checkDead();
+            endTurn();
+
+        }
+
+    }
+    ;
+
+
+
 
 }
 
@@ -152,7 +176,7 @@ print = {
             newPara = document.createElement("p");
             newPara.textContent = text;
             log.appendChild(newPara);
-            log.scrollTo(0,9999999999);
+            log.scrollTo(0, 9999999999);
         }, 500)
 
     },
@@ -169,10 +193,10 @@ announcer = {
         dom.actionBar.style.display = "none";
         dom.announcer.style.display = "flex";
     },
-   close() {
+    close() {
         dom.actionBar.style.display = "flex";
         dom.announcer.style.display = "none";
-}
+    }
 }
 
 //method to ease monster swap functionality. Swaps two elements by index.

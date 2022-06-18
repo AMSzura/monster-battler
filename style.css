@@ -17,13 +17,22 @@
     }
 }
 
+@keyframes take-damage {
+    50% {
+        visibility: hidden;
+    }
+}
+
 .announcer {
     display: none;
     flex-wrap: wrap;
-    height: 100%;
-    width:100%;
-    background-color: aqua;
+    justify-content: center;
+    align-items: center;
+    height: 33%;
+    width:auto;
+    background-color:#f7c4a5;
     font-size: larger;
+    border: 10px double black;
 }
 
 .player-monster-img.player-attack {
@@ -38,6 +47,19 @@
     animation-name: enemy-attack;
     animation-timing-function: ease-out;
 }
+
+.player-monster-img.take-damage {
+    animation-duration: 0.2s;
+    animation-name: take-damage;
+    animation-iteration-count: 3;
+}
+
+.enemy-monster-img.take-damage {
+    animation-duration: 0.2s;
+    animation-name: take-damage;
+    animation-iteration-count: 3;
+}
+
 
 
 body {
@@ -86,6 +108,8 @@ body {
     font-family: pixel;
     display: none;
     flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
     height:80vh;
     width: 1200px;
     /* min-width: 70%; */
@@ -93,6 +117,7 @@ body {
     background-color: #ce9c85;
     border-radius: 10px;
     padding: 10px;
+    gap:10px;
     box-shadow: 5px 3px 3px;
 }
 
@@ -103,6 +128,7 @@ body {
     /* padding: 10px; */
     /* background-color: bisque; */
     height: 65%;
+    width:auto;
     border: 10px double black ;
     border-radius: 10px;
     
