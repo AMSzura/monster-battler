@@ -45,7 +45,7 @@ class Monster {
     }
 }
 
-dom = {
+const dom = {
     announcer: document.querySelector(".announcer"),
     actionBar: document.querySelector(".action-bar"),
 }
@@ -63,6 +63,18 @@ const anim = {
                 playerMonsterImg.classList.remove("take-damage");
             });
             playerMonsterImg.classList.add("take-damage");
+        },
+        swapIn() {
+            playerMonsterImg.addEventListener('animationend', () => {
+                playerMonsterImg.classList.remove("swap-in");
+            });
+            
+            playerMonsterImg.classList.add("swap-in");
+            playerMonsterImg.classList.remove("swap-out");
+        },
+        swapOut() {
+            playerMonsterImg.classList.add("swap-out");
+
         }
     },
     cpu: {
@@ -94,7 +106,7 @@ Player.prototype.attack = function (input) {
         print.announcer(player.name + "'s " + player.currentMonster.name + " is using " + input.name + "!");
         dom.announcer.onclick = function () {
             announcer.close();
-            movesPopUpClose();
+            moves.close();
             determineTarget();
             input();
             print.announcer("the " + input.name + " hit " + target.name + " for " + damage + " damage!");
@@ -119,15 +131,25 @@ Player.prototype.swap = function (chosen) {
     }
     found = player.lineUp.find(element => element == chosen);
     targetIndex = player.lineUp.indexOf(found);
-    print.log("player swapped " + player.lineUp[0].name + " for " + player.lineUp[targetIndex].name);
-    player.lineUp.swap(0, targetIndex);
-    player.currentMonster = player.lineUp[0];
-    playerMonsterImg.src = player.currentMonster.imgBack;
-    playerMonsterName.textContent = player.currentMonster.name;
-    switchPopUpClose();
-    if (!deadSwap) {
-        deadSwap = false;
-        endTurn();
+    anim.player.swapOut();
+    print.announcer("player swapped out" + player.lineUp[0].name);
+    dom.announcer.onclick = function () {
+        player.lineUp.swap(0, targetIndex);
+        player.currentMonster = player.lineUp[0];
+        playerMonsterImg.src = player.currentMonster.imgBack;
+        playerMonsterName.textContent = player.currentMonster.name;
+        anim.player.swapIn();
+        print.announcer("player swappin in " + player.currentMonster.name);
+        dom.announcer.onclick = function () {
+            swap.close();
+            if (!deadSwap) {
+                deadSwap = false;
+                endTurn();
+
+            }
+
+        }
+
     }
 }
 
@@ -149,21 +171,15 @@ Cpu.prototype.attack = function () {
             announcer.close();
             checkDead();
             endTurn();
-
         }
-
     }
-    ;
-
-
-
-
 }
 
 Cpu.prototype.swap = function () {
     determineTarget();
     found = cpu.lineUp.find(element => element.isDead === false && cpu.lineUp.indexOf(element) != 0);
     targetIndex = cpu.lineUp.indexOf(found);
+    // anim.cpu.swapOut();
     print.log("cpu swapped " + cpu.lineUp[0].name + " for " + cpu.lineUp[targetIndex].name);
     cpu.lineUp.swap(0, targetIndex);
     cpu.currentMonster = cpu.lineUp[0];
@@ -184,7 +200,7 @@ Cpu.prototype.turn = function () {
 }
 
 
-print = {
+const print = {
     log(text) {
         setTimeout(function () {
             newPara = document.createElement("p");
@@ -202,7 +218,7 @@ print = {
     },
 }
 
-announcer = {
+const announcer = {
     popUp() {
         dom.actionBar.style.display = "none";
         dom.announcer.style.display = "flex";
@@ -212,6 +228,48 @@ announcer = {
         dom.announcer.style.display = "none";
     }
 }
+
+const moves = {
+    popUp() {
+        actionMenu.style.display = "none";
+        movesMenu.style.display = "flex";
+
+        for (x = 0; x < 4; x++) {
+            if (player.lineUp[0].moves[x] === undefined) {
+                continue;
+            } else {
+                moveBtnArray[x].textContent = player.lineUp[0].moves[x].name;
+            }
+        }
+    },
+    close() {
+        actionMenu.style.display = "flex";
+        movesMenu.style.display = "none";
+    }
+}
+
+const swap = {
+    popUp() {
+        actionMenu.style.display = "none";
+        switchMenu.style.display = "flex";
+
+        for (x = 1; x < 5; x++) {
+            if (player.lineUp[x] == undefined) {
+                continue;
+            } else {
+                monsterBtnArray[x - 1].textContent = player.lineUp[x].name;
+            }
+
+        }
+    },
+    close() {
+        actionMenu.style.display = "flex";
+        switchMenu.style.display = "none";
+    }
+}
+
+
+
 
 //method to ease monster swap functionality. Swaps two elements by index.
 Array.prototype.swap = function (x, y) {
@@ -319,9 +377,9 @@ const rocklerData = ["Rockler", 100, "rock", 12, 22, [scratch, growl], "images/m
 
 startBtn.addEventListener('click', battleInit);
 
-attackBtn.addEventListener('click', movesPopUp);
+attackBtn.addEventListener('click', moves.popUp);
 
-switchBtn.addEventListener('click', switchPopUp);
+switchBtn.addEventListener('click', swap.popUp);
 
 moveBtn1.addEventListener('click', function () {
     player.attack(player.currentMonster.move1);
@@ -353,46 +411,6 @@ monsterBtn5.addEventListener("click", function () {
     player.swap(player.lineUp[5]);
 });
 
-// sets action menu to invisible, moves menu to display.
-function movesPopUp() {
-    actionMenu.style.display = "none";
-    movesMenu.style.display = "flex";
-
-    for (x = 0; x < 4; x++) {
-        if (player.lineUp[0].moves[x] === undefined) {
-            continue;
-        } else {
-            moveBtnArray[x].textContent = player.lineUp[0].moves[x].name;
-        }
-
-    }
-}
-
-//reverses Pop up function
-function movesPopUpClose() {
-    actionMenu.style.display = "flex";
-    movesMenu.style.display = "none";
-}
-
-// sets action menu invisible, switch menu to display
-function switchPopUp() {
-    actionMenu.style.display = "none";
-    switchMenu.style.display = "flex";
-
-    for (x = 1; x < 5; x++) {
-        if (player.lineUp[x] == undefined) {
-            continue;
-        } else {
-            monsterBtnArray[x - 1].textContent = player.lineUp[x].name;
-        }
-
-    }
-}
-
-function switchPopUpClose() {
-    actionMenu.style.display = "flex";
-    switchMenu.style.display = "none";
-}
 
 // determines the target and source for an attack
 

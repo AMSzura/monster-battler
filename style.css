@@ -23,6 +23,24 @@
     }
 }
 
+@keyframes swap-out {
+    100% {
+        object-fit: cover;
+        object-position: 0 -2000%;
+    }
+}
+
+@keyframes swap-in {
+    0% {
+        object-fit: cover;
+        object-position: 0 -2000%;
+    }
+    100% {
+        object-fit: cover;
+        object-position: 0 0;
+    }
+}
+
 .announcer {
     display: none;
     flex-wrap: wrap;
@@ -48,18 +66,41 @@
     animation-timing-function: ease-out;
 }
 
-.player-monster-img.take-damage {
+.take-damage {
     animation-delay: 0.3s;
     animation-duration: 0.2s;
     animation-name: take-damage;
     animation-iteration-count: 3;
 }
 
-.enemy-monster-img.take-damage {
+.take-damage {
     animation-delay: 0.3s;
     animation-duration: 0.2s;
     animation-name: take-damage;
     animation-iteration-count: 3;
+}
+
+.player-monster-img.swap-out {
+    animation-delay: 0.3s;
+    animation-duration: 0.5s;
+    animation-name: swap-out;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    transition-duration: 0.5s;
+}
+
+.player-monster-img.swap-in {
+
+    animation-duration: 0.5s;
+    animation-name: swap-in;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+
+.player-monster img {
+    height: 230px;
+    width: 486px;
 }
 
 
@@ -133,7 +174,7 @@ body {
     width:auto;
     border: 10px double black ;
     border-radius: 10px;
-    
+    z-index: 0;
 }
 
 .enemy-space {
@@ -180,11 +221,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.player-monster img {
-    height: 230px;
-    width: 486px;
 }
 
 
@@ -314,3 +350,12 @@ body {
     display: none;
 }
 
+/* .whitespace {
+    width: 512px;
+    background-color: white;
+    z-index: 1;
+}
+
+.whitespace.enemy {
+    width: 624px;
+} */
