@@ -80,7 +80,7 @@
     animation-iteration-count: 3;
 }
 
-.player-monster-img.swap-out {
+.swap-out {
     animation-delay: 0.3s;
     animation-duration: 0.5s;
     animation-name: swap-out;
@@ -89,8 +89,9 @@
     transition-duration: 0.5s;
 }
 
-.player-monster-img.swap-in {
+.swap-in {
 
+    /* animation-delay: 0.3s; */
     animation-duration: 0.5s;
     animation-name: swap-in;
     animation-timing-function: ease-out;
@@ -98,7 +99,7 @@
 }
 
 
-.player-monster img {
+.player-monster-img {
     height: 230px;
     width: 486px;
 }
@@ -107,8 +108,8 @@
 
 body {
     font-family: pixel;
-    height: 100vh;
-    width: 100vw;
+    /* height: 100vh;
+    width: 100vw; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -154,13 +155,14 @@ body {
     /* align-items: center; */
     justify-content: center;
     height:80vh;
-    width: 1200px;
+    min-height: 80vh;
+    width: 70vw;
     /* min-width: 70%; */
     border: 10px double black;
     background-color: #ce9c85;
     border-radius: 10px;
-    padding: 10px;
-    gap:10px;
+    padding: 30px 20px;
+    gap:20px;
     box-shadow: 5px 3px 3px;
 }
 
@@ -232,8 +234,10 @@ body {
 }
 
 .action-bar {
-    padding: 20px;
+    /* padding: 20px; */
     display: flex;
+    justify-content: center;
+    align-items:stretch;
     height: 35%;
     max-height: 35%;
     gap: 20px;
@@ -242,12 +246,15 @@ body {
 
 .log {
     width: 50%;
-    height: 200px;
+    height: 90%;
+    max-height: 90%;
+    /* margin-top: 30px;
+    margin-bottom: 30px; */
     border: 10px double black;
     background-color: #f7c4a5;
     border-radius: 10px;
     box-shadow: 5px 3px 3px;
-    overflow: auto;
+    overflow: overlay;
     
 }
 
@@ -262,9 +269,11 @@ body {
 
 .action-menu {
     display: flex;
+    justify-content: center;
+    align-items: center;
     width: 50%;
     height: 100%;
-    gap: 30px;
+    gap: 20px;
     font-size: 52px;
 }
 
@@ -278,6 +287,7 @@ body {
 }
 
 .button {
+    height: 100%;
     background-color: #f7c4a5;
     border: 10px double black;
     box-shadow: 5px 3px 3px;
@@ -300,6 +310,8 @@ body {
 .column {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     text-align: center;
     gap: 10px
 }
@@ -327,7 +339,7 @@ body {
 
 .action-menu div {
     height: 100%;
-    width: 100%;
+    width: 90%;
     border-radius: 10px;
     
 }

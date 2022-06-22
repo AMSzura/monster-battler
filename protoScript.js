@@ -68,7 +68,7 @@ const anim = {
             playerMonsterImg.addEventListener('animationend', () => {
                 playerMonsterImg.classList.remove("swap-in");
             });
-            
+
             playerMonsterImg.classList.add("swap-in");
             playerMonsterImg.classList.remove("swap-out");
         },
@@ -89,7 +89,18 @@ const anim = {
                 cpuMonsterImg.classList.remove("take-damage");
             });
             cpuMonsterImg.classList.add("take-damage");
-        }
+        },
+        swapIn() {
+            cpuMonsterImg.addEventListener('animationend', () => {
+                cpuMonsterImg.classList.remove("swap-in");
+            });
+
+            cpuMonsterImg.classList.add("swap-in");
+            cpuMonsterImg.classList.remove("swap-out");
+        },
+        swapOut() {
+            cpuMonsterImg.classList.add("swap-out");
+        },
     }
 }
 
@@ -124,32 +135,43 @@ Player.prototype.attack = function (input) {
 }
 
 Player.prototype.swap = function (chosen) {
-    let deadSwap = false;
+    let deadSwap;
     determineTarget();
     if (player.currentMonster.isDead === true) {
         deadSwap = true;
+    } else {
+        deadSwap = false;
     }
     found = player.lineUp.find(element => element == chosen);
     targetIndex = player.lineUp.indexOf(found);
-    anim.player.swapOut();
+
+    if (!deadSwap) {
+        anim.player.swapOut();
+    }
+
     print.announcer("player swapped out" + player.lineUp[0].name);
     dom.announcer.onclick = function () {
         player.lineUp.swap(0, targetIndex);
         player.currentMonster = player.lineUp[0];
         playerMonsterImg.src = player.currentMonster.imgBack;
         playerMonsterName.textContent = player.currentMonster.name;
-        anim.player.swapIn();
-        print.announcer("player swappin in " + player.currentMonster.name);
-        dom.announcer.onclick = function () {
-            swap.close();
-            if (!deadSwap) {
-                deadSwap = false;
-                endTurn();
+        print.announcer("player swapping in " + player.currentMonster.name);
+        dom.announcer.onclick = () => {
+            anim.player.swapIn();
+            print.announcer("fight!");
+            dom.announcer.onclick = () => {
+                announcer.close();
+
+                if (!deadSwap) {
+                    swap.close();
+                    endTurn();
+
+                } else {
+                    swap.close();
+                }
 
             }
-
         }
-
     }
 }
 
@@ -179,15 +201,24 @@ Cpu.prototype.swap = function () {
     determineTarget();
     found = cpu.lineUp.find(element => element.isDead === false && cpu.lineUp.indexOf(element) != 0);
     targetIndex = cpu.lineUp.indexOf(found);
-    // anim.cpu.swapOut();
-    print.log("cpu swapped " + cpu.lineUp[0].name + " for " + cpu.lineUp[targetIndex].name);
-    cpu.lineUp.swap(0, targetIndex);
-    cpu.currentMonster = cpu.lineUp[0];
-    cpuMonsterImg.src = cpu.currentMonster.imgFront;
-    cpuMonsterName.textContent = cpu.currentMonster.name;
-    if (playerTurn != true) {
-        endTurn();
+    anim.cpu.swapOut();
+    print.announcer("cpu swapped out" + cpu.lineUp[0].name);
+    dom.announcer.onclick = () => {
+        cpu.lineUp.swap(0, targetIndex);
+        cpu.currentMonster = cpu.lineUp[0];
+        cpuMonsterImg.src = cpu.currentMonster.imgFront;
+        cpuMonsterName.textContent = cpu.currentMonster.name;
+        print.announcer("enemy swapped in " + cpu.currentMonster.name)
+        dom.announcer.onclick = () => {
+        anim.cpu.swapIn();
+        announcer.close();
+        if (playerTurn != true) {
+            endTurn();
+        }            
+        }
+
     }
+
 }
 
 Cpu.prototype.turn = function () {
@@ -429,8 +460,26 @@ function determineTarget() {
 function checkDead() {
     if (player.lineUp[0].currentHealth <= 0) {
         player.lineUp[0].isDead = true;
-    } else if (cpu.lineUp[0].currentHealth <= 0) {
+    }
+    if (cpu.lineUp[0].currentHealth <= 0) {
         cpu.lineUp[0].isDead = true;
+    }
+    if (player.lineUp[0].isDead === true) {
+        anim.player.swapOut();
+        print.announcer(player.currentMonster.name + " is KO'd. pick who's coming out next!");
+        dom.announcer.onclick = () => {
+            announcer.close();
+            swap.popUp();
+        }
+    }
+    if (cpu.lineUp[0].isDead === true) {
+        anim.player.swapOut();
+        print.announcer("the enemy's " + cpu.currentMonster.name + "is KO'd. They are swapping out");
+        dom.announcer.onclick = () => {
+            announcer.close();
+            cpu.swap();
+        }
+
     }
 }
 
