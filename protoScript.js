@@ -104,6 +104,14 @@ const anim = {
     }
 }
 
+Player.prototype.healthUpdate = function (input) {
+    playerHealth.style.width = input + "%";
+}
+
+Cpu.prototype.healthUpdate = function (input) {
+    cpuHealth.style.width = input + "%";
+}
+
 
 
 Player.prototype.attack = function (input) {
@@ -120,6 +128,7 @@ Player.prototype.attack = function (input) {
             moves.close();
             determineTarget();
             input();
+            cpu.healthUpdate(cpu.currentMonster.currentHealth);
             print.announcer("the " + input.name + " hit " + target.name + " for " + damage + " damage!");
             dom.announcer.onclick = function () {
                 announcer.close();
@@ -186,7 +195,8 @@ Cpu.prototype.attack = function () {
     dom.announcer.onclick = function () {
 
         announcer.close();
-        trainer.currentMonster.moves[random]()
+        trainer.currentMonster.moves[random]();
+        player.healthUpdate(player.currentMonster.currentHealth);
         print.announcer("the " + trainer.currentMonster.name + "'s " +
             trainer.currentMonster.moves[random].name + " did " + damage + "damage!");
         dom.announcer.onclick = function () {
@@ -379,6 +389,8 @@ const cpuMonsterImg = document.getElementById("enemy-monster-img");
 const playerMonsterName = document.getElementById("player-monster-name");
 const cpuMonsterName = document.getElementById("enemy-monster-name");
 
+const playerHealth = document.getElementById("player-health");
+const cpuHealth = document.getElementById("enemy-health");
 
 const actionMenu = document.querySelector(".action-menu");
 const movesMenu = document.querySelector(".moves-menu");
