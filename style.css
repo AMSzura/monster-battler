@@ -231,6 +231,7 @@ body {
     height: 5px;
     width: 100%;
     background-color: green;
+    transition-duration: 1s;
 }
 
 .action-bar {

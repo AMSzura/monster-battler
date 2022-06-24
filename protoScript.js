@@ -105,11 +105,25 @@ const anim = {
 }
 
 Player.prototype.healthUpdate = function (input) {
+
+    if (input <= 60 && input > 30) {
+        playerHealth.style.backgroundColor = "yellow";
+    } else if (input <= 30) {
+        playerHealth.style.backgroundColor = "red";
+    }
     playerHealth.style.width = input + "%";
+    console.log(input);
 }
 
 Cpu.prototype.healthUpdate = function (input) {
+
+    if (input <= 60 && input > 30) {
+        cpuHealth.style.backgroundColor = "yellow";
+    } else if (input <= 30) {
+        cpuHealth.style.backgroundColor = "red";
+    }
     cpuHealth.style.width = input + "%";
+    console.log(input);
 }
 
 
