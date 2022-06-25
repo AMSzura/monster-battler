@@ -1,6 +1,11 @@
 @font-face {
-    font-family: "orange kid";
-    src: url(/font/orange\ kid.ttf);
+    font-family: orange_kid;
+    src: url(/font/orange_kid.ttf);
+}
+
+@font-face {
+    font-family: Gbboot;
+    src: url(/font/Gbboot-ALpM.ttf);
 }
 
 @keyframes player-attack {
@@ -39,6 +44,10 @@
         object-fit: cover;
         object-position: 0 0;
     }
+}
+
+p {
+    font-size: 1vw;
 }
 
 .announcer {
@@ -90,8 +99,6 @@
 }
 
 .swap-in {
-
-    /* animation-delay: 0.3s; */
     animation-duration: 0.5s;
     animation-name: swap-in;
     animation-timing-function: ease-out;
@@ -107,9 +114,9 @@
 
 
 body {
-    font-family: pixel;
-    /* height: 100vh;
-    width: 100vw; */
+    font-family: orange_kid;
+    color: #f4f4f4;
+    text-shadow: 2px 2px #6e6e6e;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -125,7 +132,6 @@ body {
 
 .start-display {
     background-color:#ce9c85;
-    font-family: pixel;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -149,33 +155,29 @@ body {
 }
 
 .battle-display {
-    font-family: pixel;
     display: none;
     flex-direction: column;
-    /* align-items: center; */
     justify-content: center;
     height:80vh;
     min-height: 80vh;
     width: 70vw;
-    /* min-width: 70%; */
-    border: 10px double black;
-    background-color: #ce9c85;
+    border: 10px solid #FFC069     ;
+    background-color: #66959b;
     border-radius: 10px;
     padding: 30px 20px;
     gap:20px;
-    box-shadow: 5px 3px 3px;
+    box-shadow: 5px 3px 3px #6e6e6e;
 }
 
 .screen {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* padding: 10px; */
-    /* background-color: bisque; */
-    height: 65%;
+    height: 60%;
     width:auto;
-    border: 10px double black ;
+    border: 10px solid #FFC069 ;
     border-radius: 10px;
+    box-shadow: 5px 3px 3px #6e6e6e;
     z-index: 0;
 }
 
@@ -215,8 +217,10 @@ body {
    }
 
 .monster-name {
-    font-size: 1.8em;
+    text-transform: uppercase;
+    font-size: 4vw;
     margin: 0;
+    color: black;
 }
 
 .player-monster {
@@ -235,7 +239,6 @@ body {
 }
 
 .action-bar {
-    /* padding: 20px; */
     display: flex;
     justify-content: center;
     align-items:stretch;
@@ -249,14 +252,16 @@ body {
     width: 50%;
     height: 90%;
     max-height: 90%;
-    /* margin-top: 30px;
-    margin-bottom: 30px; */
-    border: 10px double black;
-    background-color: #f7c4a5;
+    border: 1vw solid #FFC069;
+    background-color: #A45D5D;
     border-radius: 10px;
-    box-shadow: 5px 3px 3px;
+    box-shadow: 5px 3px 3px #6e6e6e;
     overflow: overlay;
     
+}
+
+.log p {
+    margin-left: 10px;
 }
 
 
@@ -276,6 +281,7 @@ body {
     height: 100%;
     gap: 20px;
     font-size: 52px;
+    font-weight: 100;
 }
 
 .moves-menu {
@@ -288,17 +294,22 @@ body {
 }
 
 .button {
-    height: 100%;
-    background-color: #f7c4a5;
-    border: 10px double black;
-    box-shadow: 5px 3px 3px;
-    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    width: 20%;
+    font-size: 3vw;
+    border: 1vw solid #FFC069;
+    background-color: #A45D5D;
+    box-shadow: 5px 3px 3px #6e6e6e;
+    cursor:pointer;
     transition: transform 0.3s cubic-bezier(0.7, 0, 0.2, 1);
-    transform: translate3d(-4px, -4px, 0);
+    /* transform: translate3d(-4px, -4px, 0); */
 }
 
 .button:hover {
-    transform: translate3d(-8px, -8px, 0);
+    transform: translate3d(-4px, -4px, 0);
 
 }
 
@@ -306,14 +317,14 @@ body {
 
     height: 128px;
     width: 128px;
-    background-color: #f7c4a5;
+    background-color: #4b7d8a;
 }
 .column {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    text-align: center;
+    /* text-align: center; */
     gap: 10px
 }
 
@@ -363,12 +374,3 @@ body {
     display: none;
 }
 
-/* .whitespace {
-    width: 512px;
-    background-color: white;
-    z-index: 1;
-}
-
-.whitespace.enemy {
-    width: 624px;
-} */
