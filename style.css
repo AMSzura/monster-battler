@@ -1,6 +1,6 @@
 @font-face {
-    font-family: orangekid;
-    src: url(font/orangekid.ttf);
+    font-family: "orange kid";
+    src: url(/font/orange\ kid.ttf);
 }
 
 @keyframes player-attack {
