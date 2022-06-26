@@ -183,7 +183,7 @@ body {
     z-index: 0;
     background-image: url(/images/monsters/screenbackground.png);
     background-repeat: no-repeat;
-    background-size:cover;
+    background-size:100% 100%;
 }
 
 .enemy-space {
