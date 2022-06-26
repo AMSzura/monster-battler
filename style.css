@@ -46,9 +46,10 @@
     }
 }
 
-p {
+.log p {
     font-size: 1vw;
 }
+
 
 .announcer {
     display: none;
@@ -57,9 +58,10 @@ p {
     align-items: center;
     height: 33%;
     width:auto;
-    background-color:#f7c4a5;
-    font-size: larger;
-    border: 10px double black;
+    background-color:#A45D5D;
+    font-size:3vw;
+    letter-spacing: 0.05em;
+    border: 1vw solid #FFC069;
 }
 
 .player-monster-img.player-attack {
@@ -179,6 +181,9 @@ body {
     border-radius: 10px;
     box-shadow: 5px 3px 3px #6e6e6e;
     z-index: 0;
+    background-image: url(/images/monsters/screenbackground.png);
+    background-repeat: no-repeat;
+    background-size:cover;
 }
 
 .enemy-space {
@@ -186,22 +191,24 @@ body {
     display: flex;
     flex-direction: row-reverse;
     justify-content:flex-start;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4 transparent;
     padding-top: 10px;
     padding-right: 20px;
     gap: 20px;
     border-radius: 0;
+
 }
 
 .player-space {
     height: 50%;
     display: flex;
     justify-content: flex-start;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4 transparent;
     padding-bottom: 10px;
     padding-left: 20px;
     gap: 20px;
     border-radius: 0;
+
 }
 
 .player-monster-info {
@@ -305,11 +312,13 @@ body {
     box-shadow: 5px 3px 3px #6e6e6e;
     cursor:pointer;
     transition: transform 0.3s cubic-bezier(0.7, 0, 0.2, 1);
+    transition: 0.3s;
     /* transform: translate3d(-4px, -4px, 0); */
 }
 
 .button:hover {
     transform: translate3d(-4px, -4px, 0);
+    box-shadow: 7px 5px 3px #6e6e6e;
 
 }
 
